@@ -15,8 +15,13 @@ import java.util.Properties;
 
 public class OAuthService {
 
-    private String GOOGLE_CLIENT_ID;
-    private String GOOGLE_CLIENT_SECRET;
+    private static String GOOGLE_CLIENT_ID;
+    private static String GOOGLE_CLIENT_SECRET;
+    private static String SPOTIFY_CLIENT_ID;
+    private static String SPOTIFY_CLIENT_SECRET;
+    private static final String GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
+    private static final String SPOTIFY_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
+    private static final String REDIRECT_URL = "http://localhost:40001/Callback";
 
     public OAuthService(String google_client_id)  {
 
@@ -28,6 +33,9 @@ public class OAuthService {
             in.close();
             GOOGLE_CLIENT_ID = properties.getProperty("GOOGLE_CLIENT_ID");
             GOOGLE_CLIENT_SECRET = properties.getProperty("GOOGLE_CLIENT_SECRET");
+            SPOTIFY_CLIENT_SECRET = properties.getProperty("SPOTIFY_CLIENT_SECRET");
+            SPOTIFY_CLIENT_SECRET = properties.getProperty("SPOTIFY_CLIENT_SECRET");
+
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -50,9 +58,9 @@ public class OAuthService {
 
     public static String generateAuthorizationCodeUrl(String challenge){
         String url = "";
-        url = "https://accounts.google.com/o/oauth2/v2/auth"
-                + "client_id=321071089338-6hlb9h02kql4g1op8nsbkbfpf46d28h7.apps.googleusercontent.com"
-                + "redirect_uri=http://localhost:40001/Callback"
+        url = GOOGLE_AUTH_URL
+                + "client_id=" + GOOGLE_CLIENT_ID
+                + "redirect_uri=" + REDIRECT_URL
                 + "response_type=code"
                 + "scope=https://www.googleapis.com/auth/youtube"
                 + "code_challenge=" + challenge
@@ -72,5 +80,9 @@ public class OAuthService {
                                 +"redirect_uri=http://localhost:40001/Callback"
                 ).asString();
         return response;
+    }
+
+    public static String generateUUID(){
+        return "asdbasdf";
     }
 }
