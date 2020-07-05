@@ -29,11 +29,11 @@ public class OAuthService {
             }};
         }else{
             clientInfo = new HashMap<String, String>(){{
-                put("CLIENT_ID", "");
-                put("CLIENT_SECRET", "");
+                put("CLIENT_ID", "4e553333356e4435a1fcfc3a2ef30562");
+                put("CLIENT_SECRET", "e256025d393d4c5c84a8b124acf9b404");
                 put("SCOPE", "");
                 put("AUTH_URL", "");
-                put("TOKEN_URL", "");
+                put("TOKEN_URL", "https://accounts.spotify.com/api/token");
                 put("REDIRECT_URL", "http://localhost:8080/api/v1/spotify");
             }};
         }

@@ -5,6 +5,8 @@ import nyu.zc1069.converter.service.OAuthService;
 import nyu.zc1069.converter.service.SpotifyService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RequestMapping("api/v1/spotify")
 @RestController
 public class SpotifyController {
@@ -27,5 +29,18 @@ public class SpotifyController {
             @RequestParam("scope") String scope
     ){
         HttpResponse<String> accessToken = spotifyService.getAccessToken(state, code, this.spotifyService.getCodeVerifier());
+    }
+
+    @RequestMapping("search")
+    @GetMapping
+    public ArrayList<String> searchTracks(
+            @RequestBody ArrayList<String> trackTitles
+        ){
+        ArrayList<String> response = new ArrayList<String>();
+        ArrayList<HttpResponse<String>> tracksOptions = spotifyService.searchTracks(trackTitles);
+        for(HttpResponse<String> trackOptions: tracksOptions){
+            response.add(trackOptions.getBody());
+        }
+        return response;
     }
 }
