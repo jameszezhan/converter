@@ -17,7 +17,6 @@ public class OAuthService {
     private String codeChallenge, codeVerifier;
     private static HashMap<String, String> tokenMap = new HashMap<String, String>();
 
-
     public OAuthService(String platform)  {
         if (platform == "GOOGLE"){
             clientInfo = new HashMap<String, String>(){{
@@ -108,6 +107,15 @@ public class OAuthService {
         return codeVerifier;
     }
 
+    public static HashMap<String, String> getClientInfo() {
+        return clientInfo;
+    }
 
+    public String getCodeChallenge() {
+        return codeChallenge;
+    }
 
+    public static HashMap<String, String> getTokenMap() {
+        return tokenMap;
+    }
 }
