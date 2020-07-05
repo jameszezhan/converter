@@ -14,7 +14,6 @@ import java.util.UUID;
 
 public class OAuthService {
     private static HashMap<String, String> clientInfo = null;
-    private static final String REDIRECT_URL = "http://localhost:8080/api/v1/authorize";
     private String codeChallenge, codeVerifier;
     private static HashMap<String, String> tokenMap = new HashMap<String, String>();
 
@@ -27,6 +26,7 @@ public class OAuthService {
                 put("SCOPE", "https://www.googleapis.com/auth/youtube.readonly");
                 put("AUTH_URL", "https://accounts.google.com/o/oauth2/v2/auth");
                 put("TOKEN_URL", "https://oauth2.googleapis.com/token");
+                put("REDIRECT_URL", "http://localhost:8080/api/v1/youtube");
             }};
         }else{
             clientInfo = new HashMap<String, String>(){{
@@ -35,6 +35,7 @@ public class OAuthService {
                 put("SCOPE", "");
                 put("AUTH_URL", "");
                 put("TOKEN_URL", "");
+                put("REDIRECT_URL", "http://localhost:8080/api/v1/spotify");
             }};
         }
         generateAndSetCodes();
@@ -47,7 +48,7 @@ public class OAuthService {
 
         url = clientInfo.get("AUTH_URL")
                 + "?client_id=" + clientInfo.get("CLIENT_ID")
-                + "&redirect_uri=" + REDIRECT_URL
+                + "&redirect_uri=" + clientInfo.get("REDIRECT_URL")
                 + "&response_type=code"
                 + "&scope=" + clientInfo.get("SCOPE")
                 + "&code_challenge=" + this.codeChallenge
@@ -88,7 +89,7 @@ public class OAuthService {
                                     +"&client_secret="+clientInfo.get("CLIENT_SECRET")
                                     +"&code_verifier="+verifier
                                     +"&code="+code
-                                    +"&redirect_uri="+REDIRECT_URL
+                                    +"&redirect_uri="+clientInfo.get("REDIRECT_URL")
                     ).asString();
 
              if (response.getStatus() == 200){
