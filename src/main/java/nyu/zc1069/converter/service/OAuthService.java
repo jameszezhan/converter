@@ -13,48 +13,43 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class OAuthService {
-
-    private static String GOOGLE_CLIENT_ID = "321071089338-6hlb9h02kql4g1op8nsbkbfpf46d28h7.apps.googleusercontent.com";
-    private static String GOOGLE_CLIENT_SECRET = "GHdRHDIq9W3vk3jpYSDOQ5_I";
-    private static String SPOTIFY_CLIENT_ID;
-    private static String SPOTIFY_CLIENT_SECRET;
-    private static final String GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
-    private static final String SPOTIFY_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
+    private static HashMap<String, String> clientInfo = null;
     private static final String REDIRECT_URL = "http://localhost:8080/api/v1/authorize";
     private String codeChallenge, codeVerifier;
     private static HashMap<String, String> tokenMap = new HashMap<String, String>();
 
 
-
-    public OAuthService()  {
-
-//        Properties properties = new Properties();
-//        FileInputStream in = null;
-//        try {
-//            in = new FileInputStream("application.properties");
-//            properties.load(in);
-//            in.close();
-//            GOOGLE_CLIENT_ID = properties.getProperty("GOOGLE_CLIENT_ID");
-//            GOOGLE_CLIENT_SECRET = properties.getProperty("GOOGLE_CLIENT_SECRET");
-//            SPOTIFY_CLIENT_SECRET = properties.getProperty("SPOTIFY_CLIENT_SECRET");
-//            SPOTIFY_CLIENT_SECRET = properties.getProperty("SPOTIFY_CLIENT_SECRET");
-
-            generateAndSetCodes();
-
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            System.exit(1);
-//        }
+    public OAuthService(String platform)  {
+        if (platform == "GOOGLE"){
+            clientInfo = new HashMap<String, String>(){{
+                put("CLIENT_ID", "321071089338-6hlb9h02kql4g1op8nsbkbfpf46d28h7.apps.googleusercontent.com");
+                put("CLIENT_SECRET", "GHdRHDIq9W3vk3jpYSDOQ5_I");
+                put("SCOPE", "https://www.googleapis.com/auth/youtube.readonly");
+                put("AUTH_URL", "https://accounts.google.com/o/oauth2/v2/auth");
+                put("TOKEN_URL", "https://oauth2.googleapis.com/token");
+            }};
+        }else{
+            clientInfo = new HashMap<String, String>(){{
+                put("CLIENT_ID", "");
+                put("CLIENT_SECRET", "");
+                put("SCOPE", "");
+                put("AUTH_URL", "");
+                put("TOKEN_URL", "");
+            }};
+        }
+        generateAndSetCodes();
     }
 
+    /** platformPrefix can be GOOGLE or SPOTIFY*/
     public String generateAuthorizationCodeUrl(){
         String url = "";
         UUID uuid = UUID.randomUUID();
-        url = GOOGLE_AUTH_URL
-                + "?client_id=" + GOOGLE_CLIENT_ID
+
+        url = clientInfo.get("AUTH_URL")
+                + "?client_id=" + clientInfo.get("CLIENT_ID")
                 + "&redirect_uri=" + REDIRECT_URL
                 + "&response_type=code"
-                + "&scope=https://www.googleapis.com/auth/youtube"
+                + "&scope=" + clientInfo.get("SCOPE")
                 + "&code_challenge=" + this.codeChallenge
                 + "&code_challenge_method=S256"
                 + "&state="+uuid.toString();
@@ -83,20 +78,20 @@ public class OAuthService {
 
     public static HttpResponse<String> getAccessToken(String state, String code, String verifier)  {
         HttpResponse<String> response = null;
+
         try{
-             response = Unirest.post("https://oauth2.googleapis.com/token")
+             response = Unirest.post(clientInfo.get("TOKEN_URL"))
                     .header("content-type", "application/x-www-form-urlencoded")
                     .body(
                             "grant_type=authorization_code"
-                                    +"&client_id="+GOOGLE_CLIENT_ID
-                                    +"&client_secret="+GOOGLE_CLIENT_SECRET
+                                    +"&client_id="+clientInfo.get("CLIENT_ID")
+                                    +"&client_secret="+clientInfo.get("CLIENT_SECRET")
                                     +"&code_verifier="+verifier
                                     +"&code="+code
                                     +"&redirect_uri="+REDIRECT_URL
                     ).asString();
 
              if (response.getStatus() == 200){
-
                  tokenMap.put(state, response.getBody());
              }
              System.out.print(tokenMap);

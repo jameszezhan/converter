@@ -4,14 +4,13 @@ import com.mashape.unirest.http.HttpResponse;
 import nyu.zc1069.converter.service.OAuthService;
 import org.springframework.web.bind.annotation.*;
 
-
-@RequestMapping("api/v1/authorize")
+@RequestMapping("api/v1/youtube")
 @RestController
-public class OAuthController {
+public class YouTubeController {
     private final OAuthService oAuthService;
 
-    public OAuthController() {
-        this.oAuthService = new OAuthService();
+    public YouTubeController() {
+        this.oAuthService = new OAuthService("GOOGLE");
     }
 
     @PostMapping
@@ -29,6 +28,3 @@ public class OAuthController {
         HttpResponse<String> accessToken = oAuthService.getAccessToken(state, code, this.oAuthService.getCodeVerifier());
     }
 }
-
-
-
