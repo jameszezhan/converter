@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class YouTubeService extends OAuthService {
-    private static HashMap<String, String> clientInfo = getClientInfo();
-    private static HashMap<String, String> tokenMap = getTokenMap();
+    private HashMap<String, String> clientInfo = null;
+    private HashMap<String, String> tokenMap = null;
 
     public YouTubeService(String platform) {
         super(platform);
+        clientInfo = getClientInfo();
+        tokenMap = getTokenMap();
     }
 
     public static HttpResponse<String> getPlaylists(String uuid){

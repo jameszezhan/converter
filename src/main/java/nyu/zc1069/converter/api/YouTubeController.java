@@ -29,7 +29,7 @@ public class YouTubeController {
             @RequestParam("code") String code,
             @RequestParam("scope") String scope
     ){
-        HttpResponse<String> accessToken = youTubeService.getAccessToken(state, code, this.youTubeService.getCodeVerifier());
+        HttpResponse<String> accessToken = youTubeService.getAccessToken(state, code);
         System.out.println(accessToken.getBody());
     }
 

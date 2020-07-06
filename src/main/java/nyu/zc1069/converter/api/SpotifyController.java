@@ -25,10 +25,10 @@ public class SpotifyController {
     @GetMapping
     public void getAccessToken(
             @RequestParam("state") String state,
-            @RequestParam("code") String code,
-            @RequestParam("scope") String scope
+            @RequestParam("code") String code
     ){
-        HttpResponse<String> accessToken = spotifyService.getAccessToken(state, code, this.spotifyService.getCodeVerifier());
+        HttpResponse<String> accessToken = spotifyService.getAccessToken(state, code);
+        System.out.println(accessToken.getBody());
     }
 
     @RequestMapping("search")
@@ -42,5 +42,16 @@ public class SpotifyController {
             response.add(trackOptions.getBody());
         }
         return response;
+    }
+
+    @RequestMapping("migrate")
+    @PostMapping
+    public String migrate(
+            @RequestBody ArrayList<String> trackIds,
+            @RequestParam("state") String state
+    ){
+        String playlistId = spotifyService.createPlaylist(state);
+        spotifyService.addTracksToPlaylist(playlistId, state, trackIds);
+        return playlistId;
     }
 }
