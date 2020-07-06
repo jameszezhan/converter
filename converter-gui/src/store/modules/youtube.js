@@ -304,19 +304,12 @@ const state = {
           }
         }
     ],
-    tracks: [
-        {
-            title: "Rain on me"
-        },
-        {
-            title: "Rain on dme"
-        }
-    ]
+    tracks: []
 };
 
 const getters = {
     allPlaylists: (state) => state.playlists,
-    allTracks: (state) => state.tracks
+    allYtTracks: (state) => state.tracks
 };
 
 const actions = {
@@ -345,14 +338,18 @@ const actions = {
           },
           data: data
         });
-        console.log(response);
+        console.log(JSON.parse(response.data.PLIIUN_0KHZtCxUQbzWccUkXrUi7aLYeOf));
         commit("setTracks", response.data)
     }
 };
 
 const mutations = {
     setPlaylists: (state, playlists) => {state.playlists = playlists},
-    setTracks: (state, tracks) => {state.tracks = tracks},
+    setTracks: (state, tracks) => {
+      Object.keys(tracks).forEach(function(item){
+        Array.prototype.push.apply(state.tracks,JSON.parse(tracks[item]).items); 
+      })
+    },
 };
 
 export default {

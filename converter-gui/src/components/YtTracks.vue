@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
         <button @click="getTracksFromPlaylists">getTracksFromPlaylists</button>
+        <div v-for="track in allYtTracks" v-bind:key="track.id">
+            {{track.snippet.title}}
+        </div>
   </div>
 </template>
 
