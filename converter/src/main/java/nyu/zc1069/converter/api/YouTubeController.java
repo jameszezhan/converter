@@ -4,6 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import nyu.zc1069.converter.service.OAuthService;
 import nyu.zc1069.converter.service.YouTubeService;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -46,17 +47,14 @@ public class YouTubeController {
 
     @RequestMapping("tracks")
     @PostMapping
-    public ArrayList<String> GetTracks(
+    public String GetTracks(
             @RequestParam("state") String state,
             @RequestBody ArrayList<String> playlistIds
         ){
         ArrayList<String> response = new ArrayList<String>();
 
-        ArrayList<HttpResponse<String>> playlists = youTubeService.getTracks(state, playlistIds);
+        JSONObject playlists = youTubeService.getTracks(state, playlistIds);
 
-        for(HttpResponse<String> playlist : playlists){
-            response.add(playlist.getBody());
-        }
-        return response;
+        return playlists.toString();
     }
 }

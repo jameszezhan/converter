@@ -6,23 +6,18 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import nyu.zc1069.converter.model.Basetrack;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class YouTubeService extends OAuthService {
-    private HashMap<String, String> clientInfo = null;
-    private HashMap<String, String> tokenMap = null;
-
     public YouTubeService(String platform) {
         super(platform);
-        clientInfo = getClientInfo();
-        tokenMap = getTokenMap();
     }
 
     public HttpResponse<String> getPlaylists(String uuid){
         HttpResponse<String> response = null;
-        String accessToken = tokenMap.get(uuid);
+        String accessToken = getTokenMap().get(uuid);
         try{
             response = Unirest.get("https://www.googleapis.com/youtube/v3/playlists")
                     .header("Authorization", "Bearer " + accessToken)
@@ -38,25 +33,25 @@ public class YouTubeService extends OAuthService {
         return response;
     }
 
-    public static ArrayList<HttpResponse<String>> getTracks(String uuid, ArrayList<String> playlistIds){
-        ArrayList<HttpResponse<String>> tracks = new ArrayList<HttpResponse<String>>();
+    public JSONObject getTracks(String uuid, ArrayList<String> playlistIds){
+        JSONObject tracks = new JSONObject();
         for(String playlistId: playlistIds){
-            tracks.add(getTracksFromId(uuid, playlistId));
+            tracks.put(playlistId, getTracksFromId(uuid, playlistId).getBody());
         }
         return tracks;
     }
 
-    public static HttpResponse<String> getTracksFromId(String uuid, String playlistId){
-        HttpResponse<String> response = null;
-        String acessToken = "ya29.a0AfH6SMAGUDulm3Up_rJDbtvVfrAFQuDurMAOXnA1-v4DgRUotMECL5RjJBRraSusABnBUTQLMyV4uezvVgpwdPF7nBNMjC-7rs7eVrS9UzhIV-rAQN9jKsipz119J6OaavI-0cLNqpmqwJ8Cw8iu00XONUK4WeWF9C4";
+    public HttpResponse<JsonNode> getTracksFromId(String uuid, String playlistId){
+        HttpResponse<JsonNode> response = null;
+        String accessToken = getTokenMap().get(uuid);
         try{
             response = Unirest.get("https://www.googleapis.com/youtube/v3/playlistItems")
-                    .header("Authorization", "Bearer " + acessToken)
+                    .header("Authorization", "Bearer " + accessToken)
                     .header("Accept", "application/json")
                     .queryString("part", "snippet, contentDetails")
                     .queryString("maxResults", "500")
                     .queryString("playlistId", playlistId)
-                    .asString();
+                    .asJson();
         } catch (UnirestException e) {
             e.printStackTrace();
             System.exit(1);
