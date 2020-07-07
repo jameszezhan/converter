@@ -8,6 +8,8 @@ import nyu.zc1069.converter.model.Basetrack;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class YouTubeService extends OAuthService {
@@ -44,11 +46,12 @@ public class YouTubeService extends OAuthService {
     public HttpResponse<JsonNode> getTracksFromId(String uuid, String playlistId){
         HttpResponse<JsonNode> response = null;
         String accessToken = getTokenMap().get(uuid);
+        System.out.println(accessToken);
         try{
             response = Unirest.get("https://www.googleapis.com/youtube/v3/playlistItems")
                     .header("Authorization", "Bearer " + accessToken)
                     .header("Accept", "application/json")
-                    .queryString("part", "snippet, contentDetails")
+                    .queryString("part", "snippet")
                     .queryString("maxResults", "500")
                     .queryString("playlistId", playlistId)
                     .asJson();
