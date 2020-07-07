@@ -3,7 +3,8 @@
         <button @click="authenticateYouTube">authenticate</button>
         <button @click="fetchAllPlaylists">fetchAllPlaylists</button>
         <div v-for="playlist in allPlaylists" v-bind:key="playlist.id">
-            {{playlist.snippet.title}}
+          <input v-model="playlist.checked" type="checkbox" @change="togglePlaylist(playlist.id)">
+          {{playlist.snippet.title}}
         </div>
   </div>
 </template>
@@ -14,7 +15,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: 'Playlists',
   methods: {
-      ...mapActions(["fetchAllPlaylists", "authenticateYouTube"])
+      ...mapActions(["fetchAllPlaylists", "authenticateYouTube", "togglePlaylist"])
   },
   computed: mapGetters(['allPlaylists'])
 }
