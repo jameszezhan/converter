@@ -2,7 +2,8 @@
   <div class="hello">
         <button @click="getTracksFromPlaylists">getTracksFromPlaylists</button>
         <div v-for="track in allYtTracks" v-bind:key="track.id">
-            {{track.snippet.title}}
+            <input v-model="track.checked" type="checkbox" @change="toggleTracks(playlist.id)">
+            {{track.snippet.title}} 
         </div>
   </div>
 </template>
@@ -13,7 +14,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: 'YtTracks',
   methods: {
-      ...mapActions(["getTracksFromPlaylists"])
+      ...mapActions(["getTracksFromPlaylists", "toggleTracks"])
   },
   computed: mapGetters(['allYtTracks'])
 }

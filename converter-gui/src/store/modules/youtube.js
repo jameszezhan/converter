@@ -328,12 +328,25 @@ const actions = {
     },
 
     async togglePlaylist( {commit}, playlistId){
-        commit("toggleTracks", playlistId);
+        commit("togglePlaylists", playlistId);
+    },
+
+    async toggleTracks( {commit}, trackId){
+        commit("toggleTracks", trackId);
     },
 
     async getTracksFromPlaylists( {state, commit, rootState} ){
         console.log(state);
-        var data = JSON.stringify(["PLIIUN_0KHZtCxUQbzWccUkXrUi7aLYeOf","PLIIUN_0KHZtDtknC7Trlcxsig6Lpz3G9F"]);
+        var ids = [];
+        state.playlists.map(
+            playlist => {
+                if(playlist.isChecked){
+                    ids.push(playlist.id)
+                }
+            }
+        )
+        console.log(ids);
+        var data = JSON.stringify(ids);
         const response = await axios({
           method:"post",
           url: "http://localhost:8080/api/v1/youtube/tracks?state=" + rootState.uuids.uuids.youtube,
@@ -356,16 +369,28 @@ const mutations = {
       console.log(state.playlists);
     },
     setTracks: (state, tracks) => {
-      Object.keys(tracks).forEach(function(item){
-        Array.prototype.push.apply(state.tracks,JSON.parse(tracks[item]).items); 
-      });
-      console.log(state.tracks);
+        for(const [key, value] of Object.entries(tracks)){
+            console.log(key);
+            console.log(JSON.parse(value).items);
+            state.tracks = state.tracks.concat(JSON.parse(value).items);
+        }
+        state.tracks.map(
+            tracks => tracks.isChecked = false
+        )
     },
-    toggleTracks: (state, playlistId) => {
+    togglePlaylists: (state, playlistId) => {
         state.playlists = state.playlists.map(
             playlist => {
                 playlist.id === playlistId ? playlist.isChecked = ! playlist.isChecked : playlist
                 return playlist;
+            }
+        )
+    },
+    toggleTracks: (state, trackId) => {
+        state.tracks = state.tracks.map(
+            track => {
+                track.id === trackId ? track.isChecked = ! track.isChecked : track
+                return track;
             }
         )
     }
