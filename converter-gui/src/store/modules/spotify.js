@@ -31,6 +31,27 @@ const actions = {
         });
         window.test = response;
         commit("setRecommendationFromSpotify", response.data);
+    },
+
+    async startMigration({rootState}){
+        // dispatch('uuids/authenticateSpotify',null,{root: true})
+
+        var spIds = [
+            "spotify:track:24ySl2hOPGCDcxBxFIqWBu",
+            "spotify:track:4rDXHvfpSkOev47yDwvhuu"
+        ];
+        
+        var data = JSON.stringify(spIds);
+        const response = await axios({
+            method: "post",
+            url: 'http://localhost:8080/api/v1/spotify/migrate?state='+rootState.uuids.uuids.spotify,
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data: data
+        });
+        window.test = response;
+        // commit("setRecommendationFromSpotify", response.data);
     }
 };
 

@@ -5,6 +5,8 @@
             <!-- <input v-model="recommendation.isChecked" type="checkbox" @change="toggleTracks(playlist.id)"> -->
             {{recommendation.options[0].name}}  
         </div>
+        <b-button @click="authenticateSpotify">Authorize</b-button>
+        <b-button @click="startMigration">Migrate</b-button>
   </div>
 </template>
 
@@ -14,7 +16,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: 'SpTracks',
   methods: {
-    ...mapActions(["fetchRecommendations"])
+    ...mapActions(["fetchRecommendations", "startMigration", "authenticateSpotify"])
   },
   computed: mapGetters(['allRecommendations'])
 }
