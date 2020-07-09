@@ -3,6 +3,8 @@
         <b-button @click="getTracksFromPlaylists">getTracksFromPlaylists</b-button>
         <b-button @click="fetchRecommendations">getRecommenationFromSpotify</b-button>
         <div class="list">
+          <b-button @click="toggleAll(false)" type="is-danger">Deselect All</b-button>
+          <b-button @click="toggleAll(true)" type="is-success">Select All</b-button>
           <div v-for="track in allYtTracks" v-bind:key="track.id">
               <b-checkbox v-model="track.checked" type="is-success">
                 {{track.snippet.title}} 
@@ -11,6 +13,21 @@
         </div>
         <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.key">
             {{recommendation.options[0].name}}  
+        </div>
+
+        <div class="next">
+          <b-button
+            tag="router-link"
+            to="/step1"
+            type="is-link">
+            back
+          </b-button>
+          <b-button
+            tag="router-link"
+            to="/step3"
+            type="is-link">
+            next
+          </b-button>
         </div>
   </div>
 </template>
@@ -21,7 +38,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: 'YtTracks',
   methods: {
-      ...mapActions(["getTracksFromPlaylists", "fetchRecommendations"])
+      ...mapActions(["getTracksFromPlaylists", "fetchRecommendations", "toggleAll"])
   },
   computed: mapGetters(['allYtTracks', 'allRecommendations'])
 }

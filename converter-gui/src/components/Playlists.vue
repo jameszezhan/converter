@@ -14,6 +14,12 @@
         <div class="next">
           <b-button
             tag="router-link"
+            to="/"
+            type="is-link">
+            back
+          </b-button>
+          <b-button
+            tag="router-link"
             to="/step2"
             type="is-link">
             next

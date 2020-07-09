@@ -349,6 +349,10 @@ const actions = {
         });
         console.log(JSON.parse(response.data.PLIIUN_0KHZtCxUQbzWccUkXrUi7aLYeOf).items);
         commit("setTracks", response.data)
+    },
+
+    async toggleAll( {commit}, status){
+        commit("toggleAll", status);
     }
 };
 
@@ -367,9 +371,18 @@ const mutations = {
             state.tracks = state.tracks.concat(JSON.parse(value).items);
         }
         state.tracks.map(
-            tracks => tracks.checked = false
+            tracks => tracks.checked = true
         )
     },
+    toggleAll: (state, status) => {
+        state.tracks = state.tracks.map(
+            track => {
+                track.checked = status
+                return track;
+            }
+        )
+        console.log(state.tracks);
+    }
 };
 
 export default {
