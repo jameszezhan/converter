@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-        <button @click="getTracksFromPlaylists">getTracksFromPlaylists</button>
+        <b-button @click="getTracksFromPlaylists">getTracksFromPlaylists</b-button>
         <div v-for="track in allYtTracks" v-bind:key="track.id">
             <input v-model="track.checked" type="checkbox" @change="toggleTracks(playlist.id)">
             {{track.snippet.title}} 

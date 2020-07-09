@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-        <button @click="authenticateYouTube">authenticate</button>
-        <button @click="fetchAllPlaylists">fetchAllPlaylists</button>
+        <b-button @click="authenticateYouTube">authenticate</b-button>
+        <b-button @click="fetchAllPlaylists">fetchAllPlaylists</b-button>
         <div v-for="playlist in allPlaylists" v-bind:key="playlist.id">
           <input v-model="playlist.checked" type="checkbox" @change="togglePlaylist(playlist.id)">
           {{playlist.snippet.title}}
@@ -11,6 +11,11 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import Vue from 'vue'
+import { Button } from 'buefy'
+import 'buefy/dist/buefy.css'
+
+Vue.use(Button)
 
 export default {
   name: 'Playlists',
