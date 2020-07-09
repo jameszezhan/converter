@@ -1,9 +1,13 @@
 <template>
   <div class="hello">
         <b-button @click="getTracksFromPlaylists">getTracksFromPlaylists</b-button>
+        <b-button @click="fetchRecommendations">getRecommenationFromSpotify</b-button>
         <div v-for="track in allYtTracks" v-bind:key="track.id">
             <input v-model="track.checked" type="checkbox">
             {{track.snippet.title}} 
+        </div>
+        <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.key">
+            {{recommendation.options[0].name}}  
         </div>
   </div>
 </template>
@@ -14,9 +18,9 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: 'YtTracks',
   methods: {
-      ...mapActions(["getTracksFromPlaylists"])
+      ...mapActions(["getTracksFromPlaylists", "fetchRecommendations"])
   },
-  computed: mapGetters(['allYtTracks'])
+  computed: mapGetters(['allYtTracks', 'allRecommendations'])
 }
 </script>
 

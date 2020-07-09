@@ -1,24 +1,18 @@
 <template>
   <div class="hello">
-        <b-button @click="fetchRecommendations">getRecommenationFromSpotify</b-button>
-        <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.key">
-            <!-- <input v-model="recommendation.isChecked" type="checkbox" @change="toggleTracks(playlist.id)"> -->
-            {{recommendation.options[0].name}}  
-        </div>
         <b-button @click="authenticateSpotify">Authorize</b-button>
         <b-button @click="startMigration">Migrate</b-button>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: 'SpTracks',
   methods: {
     ...mapActions(["fetchRecommendations", "startMigration", "authenticateSpotify"])
-  },
-  computed: mapGetters(['allRecommendations'])
+  }
 }
 </script>
 

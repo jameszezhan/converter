@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const state = {
     uuids:{
-        youtube: "bbaf0b0b-488a-4cf9-9179-4150ccbedfa0",
+        youtube: "3e893d42-6442-4e27-a9a0-1a703f6f4c54",
         spotify: "spotify uuid"
     }
 };

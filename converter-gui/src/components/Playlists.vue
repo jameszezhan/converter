@@ -1,10 +1,14 @@
 <template>
   <div class="hello">
-        <b-button @click="authenticateYouTube">authenticate</b-button>
-        <b-button @click="fetchAllPlaylists">fetchAllPlaylists</b-button>
-        <div v-for="playlist in allPlaylists" v-bind:key="playlist.id">
-          <input v-model="playlist.checked" type="checkbox">
-          {{playlist.snippet.title}}
+        <b-button @click="authenticateYouTube">Authenticate Your YouTube Account</b-button>
+        <b-button @click="fetchAllPlaylists">Get Playlists</b-button>
+        
+        <div class="pl-list">
+          <div v-for="playlist in allPlaylists" v-bind:key="playlist.id">
+            <b-checkbox v-model="playlist.checked" type="is-success">
+              {{playlist.snippet.title}}
+            </b-checkbox>
+          </div>
         </div>
   </div>
 </template>
@@ -12,10 +16,11 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Vue from 'vue'
-import { Button } from 'buefy'
+import { Button, Checkbox } from 'buefy'
 import 'buefy/dist/buefy.css'
 
 Vue.use(Button)
+Vue.use(Checkbox)
 
 export default {
   name: 'Playlists',
@@ -28,18 +33,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.pl-list{
+  width: fit-content;
+    margin: auto;
+    text-align: left;
 }
 </style>
