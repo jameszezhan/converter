@@ -347,7 +347,7 @@ const actions = {
           },
           data: data
         });
-        console.log(JSON.parse(response.data.PLIIUN_0KHZtCxUQbzWccUkXrUi7aLYeOf).items);
+        console.log(response.data);
         commit("setTracks", response.data)
     },
 

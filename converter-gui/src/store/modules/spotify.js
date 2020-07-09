@@ -62,11 +62,13 @@ const mutations = {
     setRecommendationFromSpotify: (state, recomendations) => {
         for(const [key, value] of Object.entries(recomendations)){
             console.log(key);
-            console.log(JSON.parse(value).tracks.items);
-            state.recomendations = state.recomendations.concat({
-                "key": key,
-                "options": JSON.parse(value).tracks.items
-            });
+            if(JSON.parse(value).tracks.items.length){
+
+                state.recomendations = state.recomendations.concat({
+                    "key": key,
+                    "options": JSON.parse(value).tracks.items
+                });
+            }
         }
         state.recomendations.map(recommendation => {
             recommendation.chosenIndex = 0;

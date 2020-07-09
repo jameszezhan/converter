@@ -5,10 +5,12 @@
         <div class="list">
           <b-button @click="toggleAll(false)" type="is-danger">Deselect All</b-button>
           <b-button @click="toggleAll(true)" type="is-success">Select All</b-button>
-          <div v-for="track in allYtTracks" v-bind:key="track.id">
-              <b-checkbox v-model="track.checked" type="is-success">
-                {{track.snippet.title}} 
-              </b-checkbox>
+          <div class="tracks-container">
+            <div class="track" v-for="track in allYtTracks" v-bind:key="track.id">
+                <b-checkbox v-model="track.checked" type="is-success">
+                  {{track.snippet.title}} 
+                </b-checkbox>
+            </div>
           </div>
         </div>
         <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.key">
@@ -59,5 +61,13 @@ li {
 }
 a {
   color: #42b983;
+}
+.tracks-container{
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+}
+.track{
+  width: 33%;
 }
 </style>
