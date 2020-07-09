@@ -2,9 +2,12 @@
   <div class="hello">
         <b-button @click="getTracksFromPlaylists">getTracksFromPlaylists</b-button>
         <b-button @click="fetchRecommendations">getRecommenationFromSpotify</b-button>
-        <div v-for="track in allYtTracks" v-bind:key="track.id">
-            <input v-model="track.checked" type="checkbox">
-            {{track.snippet.title}} 
+        <div class="list">
+          <div v-for="track in allYtTracks" v-bind:key="track.id">
+              <b-checkbox v-model="track.checked" type="is-success">
+                {{track.snippet.title}} 
+              </b-checkbox>
+          </div>
         </div>
         <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.key">
             {{recommendation.options[0].name}}  

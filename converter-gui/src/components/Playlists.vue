@@ -3,12 +3,21 @@
         <b-button @click="authenticateYouTube">Authenticate Your YouTube Account</b-button>
         <b-button @click="fetchAllPlaylists">Get Playlists</b-button>
         
-        <div class="pl-list">
+        <div class="list">
           <div v-for="playlist in allPlaylists" v-bind:key="playlist.id">
             <b-checkbox v-model="playlist.checked" type="is-success">
               {{playlist.snippet.title}}
             </b-checkbox>
           </div>
+        </div>
+
+        <div class="next">
+          <b-button
+            tag="router-link"
+            to="/step2"
+            type="is-link">
+            next
+          </b-button>
         </div>
   </div>
 </template>
@@ -33,9 +42,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.pl-list{
-  width: fit-content;
-    margin: auto;
-    text-align: left;
-}
+
 </style>

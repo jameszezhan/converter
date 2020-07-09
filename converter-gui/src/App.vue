@@ -53,4 +53,9 @@ a {
     margin: 20px 40px;
     min-width: 300px;
 }
+.list{
+  width: fit-content;
+    margin: auto;
+    text-align: left;
+}
 </style>
