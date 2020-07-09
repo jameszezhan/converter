@@ -327,20 +327,12 @@ const actions = {
         commit("setPlaylists", response.data.items)
     },
 
-    async togglePlaylist( {commit}, playlistId){
-        commit("togglePlaylists", playlistId);
-    },
-
-    async toggleTracks( {commit}, trackId){
-        commit("toggleTracks", trackId);
-    },
-
     async getTracksFromPlaylists( {state, commit, rootState} ){
         console.log(state);
         var ids = [];
         state.playlists.map(
             playlist => {
-                if(playlist.isChecked){
+                if(playlist.checked){
                     ids.push(playlist.id)
                 }
             }
@@ -364,7 +356,7 @@ const mutations = {
     setPlaylists: (state, playlists) => {
       state.playlists = playlists;
       state.playlists.map(
-          playlist => playlist.isChecked = false
+          playlist => playlist.checked = false
       )
       console.log(state.playlists);
     },
@@ -375,25 +367,9 @@ const mutations = {
             state.tracks = state.tracks.concat(JSON.parse(value).items);
         }
         state.tracks.map(
-            tracks => tracks.isChecked = false
+            tracks => tracks.checked = false
         )
     },
-    togglePlaylists: (state, playlistId) => {
-        state.playlists = state.playlists.map(
-            playlist => {
-                playlist.id === playlistId ? playlist.isChecked = ! playlist.isChecked : playlist
-                return playlist;
-            }
-        )
-    },
-    toggleTracks: (state, trackId) => {
-        state.tracks = state.tracks.map(
-            track => {
-                track.id === trackId ? track.isChecked = ! track.isChecked : track
-                return track;
-            }
-        )
-    }
 };
 
 export default {

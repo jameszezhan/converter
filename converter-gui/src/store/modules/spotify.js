@@ -14,7 +14,7 @@ const actions = {
         rootState.youtube.tracks.map(
             track => {
                 console.log(track);
-                if(track.isChecked){
+                if(track.checked){
                     titlesToSearch.push(track.snippet.title)
                 }
             }
