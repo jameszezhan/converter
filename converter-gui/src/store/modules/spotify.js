@@ -36,10 +36,13 @@ const actions = {
     async startMigration({rootState}){
         // dispatch('uuids/authenticateSpotify',null,{root: true})
 
-        var spIds = [
-            "spotify:track:24ySl2hOPGCDcxBxFIqWBu",
-            "spotify:track:4rDXHvfpSkOev47yDwvhuu"
-        ];
+        var spIds = [];
+
+        state.recomendations.map(recomemendation => {
+            let index = recomemendation.chosenIndex;
+            let uri = recomemendation.options[index].uri;
+            spIds.push(uri);
+        })
         
         var data = JSON.stringify(spIds);
         const response = await axios({
@@ -65,6 +68,9 @@ const mutations = {
                 "options": JSON.parse(value).tracks.items
             });
         }
+        state.recomendations.map(recommendation => {
+            recommendation.chosenIndex = 0;
+        })
     }
 };
 
