@@ -22,17 +22,17 @@ public class SpotifyService extends OAuthService{
         tokenMap = getTokenMap();
     }
 
-    public ArrayList<HttpResponse<String>> searchTracks(ArrayList<String> trackTitles){
+    public JSONObject searchTracks(ArrayList<String> trackTitles){
         setSelfToken();
-        ArrayList<HttpResponse<String>> response = new ArrayList<HttpResponse<String>>();
+        JSONObject response = new JSONObject();
         for(String trackTitle:trackTitles){
-            response.add(searchTrack(trackTitle));
+            response.put(trackTitle, searchTrack(trackTitle).getBody());
         }
         return response;
     }
 
-    public HttpResponse<String> searchTrack(String trackTitle){
-        HttpResponse<String> response = null;
+    public HttpResponse<JsonNode> searchTrack(String trackTitle){
+        HttpResponse<JsonNode> response = null;
         try{
             response = Unirest.get("https://api.spotify.com/v1/search")
                     .header("Authorization", "Bearer " + this.tokenMap.get("self"))
@@ -40,7 +40,7 @@ public class SpotifyService extends OAuthService{
                     .queryString("q", URLEncoder.encode(trackTitle, "UTF-8"))
                     .queryString("limit", "5")
                     .queryString("type", "track")
-                    .asString();
+                    .asJson();
         } catch (UnirestException | UnsupportedEncodingException e) {
             e.printStackTrace();
             System.exit(1);

@@ -3,10 +3,12 @@ package nyu.zc1069.converter.api;
 import com.mashape.unirest.http.HttpResponse;
 import nyu.zc1069.converter.service.OAuthService;
 import nyu.zc1069.converter.service.SpotifyService;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("api/v1/spotify")
 @RestController
 public class SpotifyController {
@@ -32,16 +34,13 @@ public class SpotifyController {
     }
 
     @RequestMapping("search")
-    @GetMapping
-    public ArrayList<String> searchTracks(
+    @PostMapping
+    public String searchTracks(
             @RequestBody ArrayList<String> trackTitles
         ){
-        ArrayList<String> response = new ArrayList<String>();
-        ArrayList<HttpResponse<String>> tracksOptions = spotifyService.searchTracks(trackTitles);
-        for(HttpResponse<String> trackOptions: tracksOptions){
-            response.add(trackOptions.getBody());
-        }
-        return response;
+        JSONObject response = spotifyService.searchTracks(trackTitles);
+
+        return response.toString();
     }
 
     @RequestMapping("migrate")
