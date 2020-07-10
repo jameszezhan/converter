@@ -21,7 +21,7 @@
       <div class="card">
         <div>It seems that you haven't authorized your YouTube account yet</div>
         <b-button type="is-success"  @click="authenticateYouTube">Authenticate</b-button>
-        <p>You can close this window after you're done</p>
+        <p>Try getting playlists again after you're done</p>
       </div>
     </b-modal>
 

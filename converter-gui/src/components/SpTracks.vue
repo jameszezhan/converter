@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
-    <b-button @click="isAuthorizeFetchOkay">Migrate</b-button>
+    <b-button @click="isAuthorizeFetchOkay" v-bind:class="isDisabled().class">Migrate</b-button>
+    <div v-bind:class="isDisabled().class">
+      {{isDisabled().message}}
+    </div>
     <b-modal 
       :active.sync="isImageModalActive"
       has-modal-card
@@ -39,9 +42,23 @@ export default {
       }else{
         this.isImageModalActive = true
       }
+    },
+    isDisabled(){
+      if(!this.allPlaylists.length > 0){
+        return {
+          class:"disabled",
+          message:"Navigate back to step 1 and fetch playlists."
+        };
+      }
+      if(!this.allRecommendations.length > 0){
+        return {
+          class:"disabled",
+          message:"Navigate back to step 2 and fetch migrate options."
+        };
+      }
     }
   },
-  computed: mapGetters(['allUUIDS'])
+  computed: mapGetters(['allUUIDS', 'allRecommendations', 'allPlaylists'])
 }
 </script>
 
