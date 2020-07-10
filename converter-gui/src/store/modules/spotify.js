@@ -34,14 +34,15 @@ const actions = {
     },
 
     async startMigration({rootState}){
-        // dispatch('uuids/authenticateSpotify',null,{root: true})
-
         var spIds = [];
 
-        state.recomendations.map(recomemendation => {
-            let index = recomemendation.chosenIndex;
-            let uri = recomemendation.options[index].uri;
-            spIds.push(uri);
+        state.recomendations.map(recommendation => {
+            let index = recommendation.chosenIndex;
+            let uri = recommendation.options[index].uri;
+            let isChecked = recommendation.options[index].checked;
+            if(isChecked){
+                spIds.push(uri);
+            }
         })
         
         var data = JSON.stringify(spIds);
@@ -54,7 +55,6 @@ const actions = {
             data: data
         });
         window.test = response;
-        // commit("setRecommendationFromSpotify", response.data);
     }
 };
 
@@ -72,6 +72,8 @@ const mutations = {
         }
         state.recomendations.map(recommendation => {
             recommendation.chosenIndex = 0;
+            console.log(recommendation.options);
+            recommendation.options.map(option => option.checked = true)
         })
     }
 };

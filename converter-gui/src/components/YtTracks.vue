@@ -18,10 +18,13 @@
             </div>
           </div>
 
+
           <div class="half right" v-bind:class="showList()">
             <div class="list">
-              <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.key">
-                  {{recommendation.options[0].name}}  
+              <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.options[recommendation.chosenIndex].uri">
+                  <b-checkbox v-model="recommendation.options[recommendation.chosenIndex].checked" type="is-success">
+                    {{recommendation.options[recommendation.chosenIndex].name}}  
+                  </b-checkbox>
               </div>
             </div>
             <div class="action">
@@ -51,7 +54,7 @@ export default {
   methods: {
       ...mapActions(["getTracksFromPlaylists", "fetchRecommendations", "toggleAll"]),
       canProceed: function(){
-        if(!this.allYtTracks.length > 0){
+        if(!this.allYtTracks.length > 0 || !this.allRecommendations.length > 0 ){
           return "disabled";
         }
       },
