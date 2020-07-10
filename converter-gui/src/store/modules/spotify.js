@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as utility from './utility'
 
 const state = {
     recommendations:[]
@@ -9,8 +10,12 @@ const getters = {
 };
 
 const actions = {
-    async fetchRecommendations({commit, rootState}){
-        var titlesToSearch = [];
+    async fetchRecommendations({ state, commit, rootState}){
+        console.log(state);
+        var titlesToSearch = [
+            "Rain on me",
+            "spit it out"
+        ];
         rootState.youtube.tracks.map(
             track => {
                 console.log(track);
@@ -25,12 +30,15 @@ const actions = {
             method: "post",
             url: 'http://localhost:8080/api/v1/spotify/search',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Accept":"application/json"
             },
             data: data
         });
-        window.test = response;
-        commit("setRecommendationFromSpotify", response.data);
+        
+
+        var recommendations = utility.parseApiResponse(response);
+        commit("setRecommendationFromSpotify", recommendations);
     },
 
     async startMigration({rootState}){
@@ -63,21 +71,17 @@ const actions = {
 
 const mutations = {
     setRecommendationFromSpotify: (state, recommendations) => {
-        for(const [key, value] of Object.entries(recommendations)){
-            console.log(key);
-            if(JSON.parse(value).tracks.items.length){
-
-                state.recommendations = state.recommendations.concat({
-                    "key": key,
-                    "options": JSON.parse(value).tracks.items
-                });
+        for (const [key, value] of Object.entries(recommendations)) {
+            let recommendation = {
+                searchText: key,
+                options: value,
+                chosenIndex: 0
             }
+            state.recommendations = [
+                ...state.recommendations,
+                recommendation
+            ]
         }
-        state.recommendations.map(recommendation => {
-            recommendation.chosenIndex = 0;
-            console.log(recommendation.options);
-            recommendation.options.map(option => option.checked = true)
-        })
     },
     resetRecommendation: (state) => {
         state.recommendations.map(recommendation => {
