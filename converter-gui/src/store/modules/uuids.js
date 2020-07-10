@@ -2,13 +2,13 @@ import axios from 'axios';
 
 const state = {
     uuids:{
-        youtube: "4e49ee31-8965-4e95-9b16-e7d882902f21",
-        spotify: "spotify uuid"
+        youtube: "initial",
+        spotify: "initial"
     }
 };
 
 const getters = {
-    getAllUUIDs: (state) => state.uuids
+    allUUIDS: (state) => state.uuids
 };
 
 const actions = {

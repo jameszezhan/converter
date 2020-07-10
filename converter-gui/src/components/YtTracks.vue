@@ -2,35 +2,44 @@
   <div class="hello">
         <b-button @click="getTracksFromPlaylists">getTracksFromPlaylists</b-button>
         <b-button @click="fetchRecommendations">getRecommenationFromSpotify</b-button>
-        <div class="list">
-          <b-button @click="toggleAll(false)" type="is-danger">Deselect All</b-button>
-          <b-button @click="toggleAll(true)" type="is-success">Select All</b-button>
-          <div class="tracks-container">
-            <div class="track" v-for="track in allYtTracks" v-bind:key="track.id">
-                <b-checkbox v-model="track.checked" type="is-success">
-                  {{track.snippet.title}} 
-                </b-checkbox>
+        
+        <div>
+          <div class="half" v-bind:class="showList()">
+            <div class="list">
+              <div v-for="track in allYtTracks" v-bind:key="track.id">
+                  <b-checkbox v-model="track.checked" type="is-success">
+                    {{track.snippet.title}} 
+                  </b-checkbox>
+              </div>
+            </div>
+            <div class="action">
+              <b-button @click="toggleAll(false)" type="is-danger" class="small">Deselect All</b-button>
+              <b-button @click="toggleAll(true)" type="is-success" class="small">Select All</b-button>
             </div>
           </div>
-        </div>
-        <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.key">
-            {{recommendation.options[0].name}}  
+
+          <div class="half right" v-bind:class="showList()">
+            <div class="list">
+              <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.key">
+                  {{recommendation.options[0].name}}  
+              </div>
+            </div>
+            <div class="action">
+              <b-button @click="toggleAll(false)" type="is-danger" class="small">Deselect All</b-button>
+              <b-button @click="toggleAll(true)" type="is-success" class="small">Select All</b-button>
+            </div>
+          </div>
+
         </div>
 
-        <div class="next">
-          <b-button
-            tag="router-link"
-            to="/step1"
-            type="is-link">
-            back
-          </b-button>
-          <b-button
-            tag="router-link"
-            to="/step3"
-            type="is-link">
-            next
-          </b-button>
-        </div>
+
+        <b-button
+          v-bind:class="canProceed()"
+          tag="router-link"
+          to="/step3"
+          type="is-link">
+          next
+        </b-button>
   </div>
 </template>
 
@@ -40,7 +49,17 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: 'YtTracks',
   methods: {
-      ...mapActions(["getTracksFromPlaylists", "fetchRecommendations", "toggleAll"])
+      ...mapActions(["getTracksFromPlaylists", "fetchRecommendations", "toggleAll"]),
+      canProceed: function(){
+        if(!this.allYtTracks.length > 0){
+          return "disabled";
+        }
+      },
+      showList: function(){
+        if(!this.allYtTracks.length > 0){
+          return "disabled";
+        }
+      }
   },
   computed: mapGetters(['allYtTracks', 'allRecommendations'])
 }

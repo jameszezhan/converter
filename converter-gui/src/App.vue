@@ -11,6 +11,10 @@
 
 
 <style>
+body{
+  height: 100vh;
+  widows: 100vw;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -47,14 +51,42 @@ li {
 a {
   color: #42b983;
 }
-
+.action{
+  display: flex;
+}
 .button {
     margin: 20px 40px;
     min-width: 300px;
 }
+.small {
+  width: 45%;
+  min-width: unset;
+  margin: 10px auto;
+}
+
 .list{
   width: fit-content;
-    margin: auto;
-    text-align: left;
+  margin: auto;
+  text-align: left;
+  box-shadow: none !important;
+  padding: 10px 20px;
+  max-height: 500px;
+  height: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.half{
+  width: 45%;
+  display: inline-block;
+}
+.right{
+  float: right;
+}
+.disabled{
+  display: none !important;
+}
+.card{
+    padding: 20px;
+    border-radius: 20px;
 }
 </style>
