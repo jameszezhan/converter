@@ -65,21 +65,29 @@ public class YouTubeService extends OAuthService {
         return output;
     }
 
-    public String getTracks(String uuid, ArrayList<String> playlistIds){
+    public String getTracks(String uuid, ArrayList<String> playlistIds) {
         String output = "";
         JSONObject body = new JSONObject();
-        for(String playlistId: playlistIds){
-            body.put(playlistId, getTracksFromId(uuid, playlistId));
+        ArrayList<Basetrack> allTracks = new ArrayList<>();
+        for(String playlistId: playlistIds) {
+            allTracks.addAll(getTracksFromId(uuid, playlistId));
         }
-        output = this.constructApiReturnContent(body);
+
+        try {
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            output = ow.writeValueAsString(allTracks);
+        } catch (JsonProcessingException e){
+            e.printStackTrace();
+            System.exit(1);
+        }
 
         return output;
     }
 
-    public String getTracksFromId(String uuid, String playlistId){
+    public ArrayList<Basetrack> getTracksFromId(String uuid, String playlistId){
         HttpResponse<JsonNode> response = null;
-        String trackJson = "";
         String accessToken = getTokenMap().get(uuid);
+        ArrayList<Basetrack> tracksFromPlaylist = new ArrayList<Basetrack>();
         try{
             response = Unirest.get("https://www.googleapis.com/youtube/v3/playlistItems")
                     .header("Authorization", "Bearer " + accessToken)
@@ -108,15 +116,13 @@ public class YouTubeService extends OAuthService {
                         playlistType,
                         playlistTypeArtists
                 );
-                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-                trackJson = ow.writeValueAsString(playlistBaseTrack);
+                tracksFromPlaylist.add(playlistBaseTrack);
             }
-
-        } catch (UnirestException | JsonProcessingException e) {
+        } catch (UnirestException e) {
             e.printStackTrace();
             System.exit(1);
         }
-        return trackJson;
+        return tracksFromPlaylist;
     }
 
 
