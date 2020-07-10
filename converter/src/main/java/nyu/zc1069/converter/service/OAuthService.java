@@ -137,10 +137,7 @@ public class OAuthService {
         return baseTrack;
     }
 
-    public String constructApiReturnContent(JSONObject body, int status){
-        JSONObject response = new JSONObject();
-        response.put("status", status);
-        response.put("body", body);
-        return response.toString();
+    public String constructApiReturnContent(JSONObject body){
+        return body.toString();
     }
 }

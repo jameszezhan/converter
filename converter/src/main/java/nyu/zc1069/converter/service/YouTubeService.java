@@ -57,7 +57,7 @@ public class YouTubeService extends OAuthService {
                 body.put(playlistId, playlistJson);
             }
 
-            output = this.constructApiReturnContent(body, response.getStatus());
+            output = this.constructApiReturnContent(body);
         } catch (UnirestException | JsonProcessingException e) {
             e.printStackTrace();
             System.exit(1);
@@ -71,7 +71,7 @@ public class YouTubeService extends OAuthService {
         for(String playlistId: playlistIds){
             body.put(playlistId, getTracksFromId(uuid, playlistId));
         }
-        output = this.constructApiReturnContent(body, 200);
+        output = this.constructApiReturnContent(body);
 
         return output;
     }

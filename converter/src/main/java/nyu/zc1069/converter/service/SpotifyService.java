@@ -3,6 +3,7 @@ package nyu.zc1069.converter.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -34,13 +35,14 @@ public class SpotifyService extends OAuthService{
         for(String trackTitle:trackTitles){
             body.put(trackTitle, searchTrack(trackTitle));
         }
-        output = this.constructApiReturnContent(body, 200);
+        output = this.constructApiReturnContent(body);
         return output;
     }
 
     public String searchTrack(String trackTitle){
         HttpResponse<String> response = null;
-        String basetrackJSON = "";
+        String optionsJson = "";
+        ArrayList<Basetrack> options = new ArrayList<Basetrack>();
         try{
             response = Unirest.get("https://api.spotify.com/v1/search")
                     .header("Authorization", "Bearer " + this.tokenMap.get("self"))
@@ -71,15 +73,17 @@ public class SpotifyService extends OAuthService{
                         type,
                         artists
                 );
-                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-                basetrackJSON = ow.writeValueAsString(basetrack);
+                options.add(basetrack);
+
             }
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            optionsJson = ow.writeValueAsString(options);
 
         } catch (UnirestException | UnsupportedEncodingException | JsonProcessingException e) {
             e.printStackTrace();
             System.exit(1);
         }
-        return basetrackJSON;
+        return optionsJson;
     }
 
     public void setSelfToken(){
