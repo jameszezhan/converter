@@ -65,25 +65,30 @@ a {
 }
 
 .list{
-  width: fit-content;
+  width: 100%;
   margin: auto;
   text-align: left;
   box-shadow: none !important;
   padding: 10px 20px;
   max-height: 500px;
   height: 500px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 .half{
   width: 45%;
   display: inline-block;
+  float: left;
 }
 .right{
   float: right;
 }
-.disabled{
+.hidden{
   display: none !important;
+}
+.disabled{
+  pointer-events: none;
+  opacity: 0.5;
 }
 .card{
     padding: 20px;

@@ -19,7 +19,7 @@
       aria-role="dialog"
       aria-modal>
       <div class="card">
-        <div>It seems that you haven't authorize your YouTube account yet</div>
+        <div>It seems that you haven't authorized your YouTube account yet</div>
         <b-button type="is-success"  @click="authenticateYouTube">Authenticate</b-button>
         <p>You can close this window after you're done</p>
       </div>
@@ -64,12 +64,12 @@ export default {
       },
       canProceed: function(){
         if(!this.allPlaylists.length > 0){
-          return "disabled";
+          return "hidden";
         }
       },
       showList: function(){
         if(!this.allPlaylists.length > 0){
-          return "disabled";
+          return "hidden";
         }
       }
   },

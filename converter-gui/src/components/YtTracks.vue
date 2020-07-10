@@ -1,10 +1,14 @@
 <template>
   <div class="hello">
-        <b-button @click="getTracksFromPlaylists">getTracksFromPlaylists</b-button>
-        <b-button @click="fetchRecommendations">getRecommenationFromSpotify</b-button>
+        <b-button @click="getTracksFromPlaylists" v-bind:class="isDisabled('youtube')">getTracksFromPlaylists</b-button>
+        <b-button @click="fetchRecommendations" v-bind:class="isDisabled('spotify')">getRecommenationFromSpotify</b-button>
         
+        <div v-bind:class="isDisabled('youtube') && isDisabled('spotify')">
+          Navigate back to step 1 and fetch playlists first.
+        </div>
+
         <div>
-          <div class="half" v-bind:class="showList()">
+          <div class="half" v-bind:class="showList('youtube')">
             <div class="list">
               <div v-for="track in allYtTracks" v-bind:key="track.id">
                   <b-checkbox v-model="track.checked" type="is-success">
@@ -19,7 +23,7 @@
           </div>
 
 
-          <div class="half right" v-bind:class="showList()">
+          <div class="half right" v-bind:class="showList('spotify')">
             <div class="list">
               <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.options[recommendation.chosenIndex].uri">
                   <b-checkbox v-model="recommendation.options[recommendation.chosenIndex].checked" type="is-success">
@@ -55,41 +59,33 @@ export default {
       ...mapActions(["getTracksFromPlaylists", "fetchRecommendations", "toggleAll"]),
       canProceed: function(){
         if(!this.allYtTracks.length > 0 || !this.allRecommendations.length > 0 ){
-          return "disabled";
+          return "hidden";
         }
       },
-      showList: function(){
-        if(!this.allYtTracks.length > 0){
-          return "disabled";
+      showList: function(platform){
+        if(platform =="spotify"){
+          if(!this.allRecommendations.length > 0){
+            return "hidden";
+          }
+        }else if(platform =="youtube"){
+          if(!this.allYtTracks.length > 0){
+            return "hidden";
+          }
+        }
+      },
+      isDisabled: function(platform){
+        if(platform =="spotify"){
+          if(!this.allYtTracks.length > 0){
+            return "disabled";
+          }
+        }else if(platform =="youtube"){
+          if(!this.allPlaylists.length > 0){
+            return "disabled";
+          }
         }
       }
   },
-  computed: mapGetters(['allYtTracks', 'allRecommendations'])
+  computed: mapGetters(['allPlaylists', 'allYtTracks', 'allRecommendations'])
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.tracks-container{
-  display: flex;
-  flex-wrap: wrap;
-  margin: auto;
-}
-.track{
-  width: 33%;
-}
-</style>
