@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const state = {
-    recomendations:[]
+    recommendations:[]
 };
 
 const getters = {
-    allRecommendations: (state) => state.recomendations
+    allRecommendations: (state) => state.recommendations
 };
 
 const actions = {
@@ -36,7 +36,7 @@ const actions = {
     async startMigration({rootState}){
         var spIds = [];
 
-        state.recomendations.map(recommendation => {
+        state.recommendations.map(recommendation => {
             let index = recommendation.chosenIndex;
             let uri = recommendation.options[index].uri;
             let isChecked = recommendation.options[index].checked;
@@ -55,25 +55,33 @@ const actions = {
             data: data
         });
         window.test = response;
+    },
+    resetRecommendation({commit}){
+        commit("resetRecommendation");
     }
 };
 
 const mutations = {
-    setRecommendationFromSpotify: (state, recomendations) => {
-        for(const [key, value] of Object.entries(recomendations)){
+    setRecommendationFromSpotify: (state, recommendations) => {
+        for(const [key, value] of Object.entries(recommendations)){
             console.log(key);
             if(JSON.parse(value).tracks.items.length){
 
-                state.recomendations = state.recomendations.concat({
+                state.recommendations = state.recommendations.concat({
                     "key": key,
                     "options": JSON.parse(value).tracks.items
                 });
             }
         }
-        state.recomendations.map(recommendation => {
+        state.recommendations.map(recommendation => {
             recommendation.chosenIndex = 0;
             console.log(recommendation.options);
             recommendation.options.map(option => option.checked = true)
+        })
+    },
+    resetRecommendation: (state) => {
+        state.recommendations.map(recommendation => {
+            recommendation.chosenIndex = 0;
         })
     }
 };

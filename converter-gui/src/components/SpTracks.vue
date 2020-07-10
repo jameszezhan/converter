@@ -56,6 +56,10 @@ export default {
           message:"Navigate back to step 2 and fetch migrate options."
         };
       }
+      return {
+        class:"",
+        message:""
+      }
     }
   },
   computed: mapGetters(['allUUIDS', 'allRecommendations', 'allPlaylists'])

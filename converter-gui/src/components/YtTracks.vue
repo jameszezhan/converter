@@ -58,20 +58,25 @@
           :destroy-on-hide="false"
           aria-role="dialog"
           aria-modal>
-          <div class="card">
+          <!-- <div class="card">
             <div>
               <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.options[recommendation.chosenIndex].uri">
-                <b-select v-bind:placeholder=recommendation.options[recommendation.chosenIndex].name>
+                <b-select 
+                  v-bind:placeholder=recommendation.options[recommendation.chosenIndex].name
+                  v-model="recommendation.chosenIndex">
                   <option 
-                    v-for="option in recommendation.options" 
+                    v-for="(option, index) in recommendation.options" 
                     v-bind:key="option.uri"
-                    v-bind:value="option.uri">
+                    v-bind:value="index">
                     {{option.name}} 
                   </option>
                 </b-select>
               </div>
+              <b-button @click="resetRecommendation">Cancel</b-button>
             </div>
-          </div>
+          </div> -->
+          <!-- <modal-form v-bind="Alternatives"></modal-form> -->
+          <Alternatives />
         </b-modal>
         
   </div>
@@ -81,17 +86,23 @@
 import { mapGetters, mapActions } from "vuex";
 import Vue from 'vue'
 import { Modal, Select } from 'buefy'
+import Alternatives from '@/components/Modals/Alternatives.vue'
+
 Vue.use(Modal)
 Vue.use(Select)
 export default {
   name: 'YtTracks',
+  components: {
+    Alternatives,
+  },
   data(){
     return {
-      isAltModalActive:false
+      isAltModalActive:false,
+      localAltSelections:{}
     }
   },
   methods: {
-      ...mapActions(["getTracksFromPlaylists", "fetchRecommendations", "toggleAll"]),
+      ...mapActions(["getTracksFromPlaylists", "fetchRecommendations", "toggleAll", "resetRecommendation"]),
       canProceed: function(){
         if(!this.allYtTracks.length > 0 || !this.allRecommendations.length > 0 ){
           return "hidden";
