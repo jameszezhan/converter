@@ -39,9 +39,9 @@ public class SpotifyController {
     public String searchTracks(
             @RequestBody ArrayList<String> trackTitles
         ){
-        JSONObject response = spotifyService.searchTracks(trackTitles);
+        String response = spotifyService.searchTracks(trackTitles);
 
-        return response.toString();
+        return response;
     }
 
     @RequestMapping("migrate")

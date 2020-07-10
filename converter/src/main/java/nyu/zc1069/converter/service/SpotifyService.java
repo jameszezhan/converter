@@ -1,9 +1,14 @@
 package nyu.zc1069.converter.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import nyu.zc1069.converter.model.Basetrack;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -22,17 +27,20 @@ public class SpotifyService extends OAuthService{
         tokenMap = getTokenMap();
     }
 
-    public JSONObject searchTracks(ArrayList<String> trackTitles){
+    public String searchTracks(ArrayList<String> trackTitles){
         setSelfToken();
-        JSONObject response = new JSONObject();
+        String output = "";
+        JSONObject body = new JSONObject();
         for(String trackTitle:trackTitles){
-            response.put(trackTitle, searchTrack(trackTitle).getBody());
+            body.put(trackTitle, searchTrack(trackTitle));
         }
-        return response;
+        output = this.constructApiReturnContent(body, 200);
+        return output;
     }
 
-    public HttpResponse<JsonNode> searchTrack(String trackTitle){
-        HttpResponse<JsonNode> response = null;
+    public String searchTrack(String trackTitle){
+        HttpResponse<String> response = null;
+        String basetrackJSON = "";
         try{
             response = Unirest.get("https://api.spotify.com/v1/search")
                     .header("Authorization", "Bearer " + this.tokenMap.get("self"))
@@ -40,12 +48,38 @@ public class SpotifyService extends OAuthService{
                     .queryString("q", URLEncoder.encode(trackTitle, "UTF-8"))
                     .queryString("limit", "5")
                     .queryString("type", "track")
-                    .asJson();
-        } catch (UnirestException | UnsupportedEncodingException e) {
+                    .asString();
+            JSONObject resBody = new JSONObject(response.getBody());
+            JSONArray items = resBody.getJSONObject("tracks").getJSONArray("items");
+
+            for(int i = 0; i < items.length(); i++){
+                JSONObject item = items.getJSONObject(i);
+                String id = item.getString("uri");
+                String title = item.getString("name");
+                String platform = "spotify";
+                String type = "tracks";
+                ArrayList<String> artists = new ArrayList<>();
+                JSONArray artistsObj = item.getJSONArray("artists");
+                for(int j = 0; j < artistsObj.length(); j++){
+                    JSONObject artist = artistsObj.getJSONObject(j);
+                    artists.add(artist.getString("name"));
+                }
+                Basetrack basetrack = this.constructBaseTrack(
+                        id,
+                        title,
+                        platform,
+                        type,
+                        artists
+                );
+                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+                basetrackJSON = ow.writeValueAsString(basetrack);
+            }
+
+        } catch (UnirestException | UnsupportedEncodingException | JsonProcessingException e) {
             e.printStackTrace();
             System.exit(1);
         }
-        return response;
+        return basetrackJSON;
     }
 
     public void setSelfToken(){
