@@ -12,19 +12,15 @@ const getters = {
 const actions = {
     async fetchRecommendations({ state, commit, rootState}){
         console.log(state);
-        var titlesToSearch = [
-            "Rain on me",
-            "spit it out"
-        ];
+        var titlesToSearch = [];
         rootState.youtube.tracks.map(
             track => {
                 console.log(track);
                 if(track.checked){
-                    titlesToSearch.push(track.snippet.title)
+                    titlesToSearch.push(track.name)
                 }
             }
         )
-        console.log(titlesToSearch);
         var data = JSON.stringify(titlesToSearch);
         const response = await axios({
             method: "post",
@@ -46,8 +42,8 @@ const actions = {
 
         state.recommendations.map(recommendation => {
             let index = recommendation.chosenIndex;
-            let uri = recommendation.options[index].uri;
-            let isChecked = recommendation.options[index].checked;
+            let uri = recommendation.options[index].id;
+            let isChecked = recommendation.checked;
             if(isChecked){
                 spIds.push(uri);
             }
@@ -72,10 +68,14 @@ const actions = {
 const mutations = {
     setRecommendationFromSpotify: (state, recommendations) => {
         for (const [key, value] of Object.entries(recommendations)) {
+            if(!value.length > 0){
+                continue;
+            }
             let recommendation = {
                 searchText: key,
                 options: value,
-                chosenIndex: 0
+                chosenIndex: 0,
+                checked: true
             }
             state.recommendations = [
                 ...state.recommendations,

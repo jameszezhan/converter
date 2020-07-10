@@ -12,7 +12,7 @@
             <div class="list">
               <div v-for="track in allYtTracks" v-bind:key="track.id">
                   <b-checkbox v-model="track.checked" type="is-success">
-                    {{track.snippet.title}} 
+                    {{track.displayTitle}} 
                   </b-checkbox>
               </div>
             </div>
@@ -25,8 +25,8 @@
 
           <div class="half right" v-bind:class="showList('spotify')">
             <div class="list">
-              <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.options[recommendation.chosenIndex].uri">
-                  <b-checkbox v-model="recommendation.options[recommendation.chosenIndex].checked" type="is-success">
+              <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.options[recommendation.chosenIndex].id">
+                  <b-checkbox v-model="recommendation.checked" type="is-success">
                     {{recommendation.options[recommendation.chosenIndex].name}}  
                   </b-checkbox>
               </div>
@@ -58,24 +58,6 @@
           :destroy-on-hide="false"
           aria-role="dialog"
           aria-modal>
-          <!-- <div class="card">
-            <div>
-              <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.options[recommendation.chosenIndex].uri">
-                <b-select 
-                  v-bind:placeholder=recommendation.options[recommendation.chosenIndex].name
-                  v-model="recommendation.chosenIndex">
-                  <option 
-                    v-for="(option, index) in recommendation.options" 
-                    v-bind:key="option.uri"
-                    v-bind:value="index">
-                    {{option.name}} 
-                  </option>
-                </b-select>
-              </div>
-              <b-button @click="resetRecommendation">Cancel</b-button>
-            </div>
-          </div> -->
-          <!-- <modal-form v-bind="Alternatives"></modal-form> -->
           <Alternatives />
         </b-modal>
         

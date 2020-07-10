@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as utility from './utility'
 
 const state = {
     playlists:[],
@@ -21,8 +22,9 @@ const actions = {
                 }
             }
         );
-        console.log(response);
-        commit("setPlaylists", response.data.items)
+        var playlists = utility.parseApiResponse(response);
+
+        commit("setPlaylists", playlists)
     },
 
     async getTracksFromPlaylists( {state, commit, rootState} ){
@@ -45,7 +47,6 @@ const actions = {
           },
           data: data
         });
-        console.log(response.data);
         commit("setTracks", response.data)
     },
 
@@ -56,21 +57,18 @@ const actions = {
 
 const mutations = {
     setPlaylists: (state, playlists) => {
-      state.playlists = playlists;
-      state.playlists.map(
-          playlist => playlist.checked = false
-      )
-      console.log(state.playlists);
+        for (const [key, value] of Object.entries(playlists)) {
+            console.log(key);
+            value.checked = true;
+            state.playlists = [
+                ...state.playlists,
+                value
+            ]
+        }
     },
     setTracks: (state, tracks) => {
-        for(const [key, value] of Object.entries(tracks)){
-            console.log(key);
-            console.log(JSON.parse(value).items);
-            state.tracks = state.tracks.concat(JSON.parse(value).items);
-        }
-        state.tracks.map(
-            tracks => tracks.checked = true
-        )
+        state.tracks = tracks;
+        state.tracks.map(track => track.checked = true)
     },
     toggleAll: (state, status) => {
         state.tracks = state.tracks.map(

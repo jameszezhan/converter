@@ -6,7 +6,7 @@
     <div class="list" v-bind:class="showList()">
       <div v-for="playlist in allPlaylists" v-bind:key="playlist.id">
         <b-checkbox v-model="playlist.checked" type="is-success">
-          {{playlist.snippet.title}}
+          {{playlist.displayTitle}}
         </b-checkbox>
       </div>
     </div>
