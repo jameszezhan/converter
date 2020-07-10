@@ -25,12 +25,13 @@ public class SpotifyController {
     }
 
     @GetMapping
-    public void getAccessToken(
+    public String getAccessToken(
             @RequestParam("state") String state,
             @RequestParam("code") String code
     ){
         HttpResponse<String> accessToken = spotifyService.getAccessToken(state, code);
         System.out.println(accessToken.getBody());
+        return "You can close this window now";
     }
 
     @RequestMapping("search")
