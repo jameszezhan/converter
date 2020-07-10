@@ -38,12 +38,9 @@ public class YouTubeController {
     @RequestMapping("playlist")
     @GetMapping
     public String GetPlaylists(@RequestParam("state") String state){
-        HttpResponse<String> playlists = youTubeService.getPlaylists(state);
-
-        System.out.println(playlists.getStatus());
-        System.out.println(playlists.getBody());
-
-        return playlists.getBody();
+        String response = youTubeService.getPlaylists(state);
+        System.out.println(response);
+        return response;
     }
 
     @RequestMapping("tracks")
@@ -52,10 +49,8 @@ public class YouTubeController {
             @RequestParam("state") String state,
             @RequestBody ArrayList<String> playlistIds
         ){
-        ArrayList<String> response = new ArrayList<String>();
-
-        JSONObject playlists = youTubeService.getTracks(state, playlistIds);
-
-        return playlists.toString();
+        String response = youTubeService.getTracks(state, playlistIds);
+        System.out.println(response);
+        return response;
     }
 }

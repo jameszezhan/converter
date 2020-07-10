@@ -3,6 +3,7 @@ package nyu.zc1069.converter.service;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import nyu.zc1069.converter.model.Basetrack;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -10,6 +11,7 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.UUID;
@@ -121,5 +123,24 @@ public class OAuthService {
 
     public HashMap<String, String> getTokenMap() {
         return this.tokenMap;
+    }
+
+    public Basetrack constructBaseTrack(
+            String id,
+            String name,
+            String platform,
+            String type,
+            ArrayList<String> artists
+    ){
+        String displayTitle = name;
+        Basetrack baseTrack = new Basetrack(id, name, platform, type, artists, name);
+        return baseTrack;
+    }
+
+    public String constructApiReturnContent(JSONObject body, int status){
+        JSONObject response = new JSONObject();
+        response.put("status", status);
+        response.put("body", body);
+        return response.toString();
     }
 }
