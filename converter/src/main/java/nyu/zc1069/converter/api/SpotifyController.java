@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://127.0.0.1:8081")
 @RequestMapping("api/v1/spotify")
 @RestController
 public class SpotifyController {

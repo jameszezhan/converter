@@ -14,7 +14,7 @@ const getters = {
 
 const actions = {
     async authenticateYouTube( { commit } ){
-        const response = await axios.post('http://localhost:8080/api/v1/youtube');
+        const response = await axios.post('http://127.0.0.1:8080/api/v1/youtube');
         const urlParams = new URLSearchParams(response.data);
         const uuid = urlParams.get("state");
         console.log(response);
@@ -23,7 +23,7 @@ const actions = {
     },
 
     async authenticateSpotify( { commit } ){
-        const response = await axios.post('http://localhost:8080/api/v1/spotify');
+        const response = await axios.post('http://127.0.0.1:8080/api/v1/spotify');
         const urlParams = new URLSearchParams(response.data);
         const uuid = urlParams.get("state");
         console.log(response);

@@ -6,10 +6,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import nyu.zc1069.converter.model.Basetrack;
 import org.json.JSONObject;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,9 +21,9 @@ public class OAuthService {
     public OAuthService(String platform)  {
         // read properties from config file
         Properties properties = new Properties();
-        FileInputStream in = null;
+        InputStream in = null;
         try {
-            in = new FileInputStream("config.properties");
+            in = getClass().getClassLoader().getResourceAsStream("config.properties");
             properties.load(in);
             in.close();
         } catch (FileNotFoundException e) {
@@ -38,12 +35,12 @@ public class OAuthService {
         }
 
         clientInfo = new HashMap<>(){{
-            put("CLIENT_ID", properties.getProperty(platform + "CLIENT_ID"));
-            put("CLIENT_SECRET", properties.getProperty(platform + "CLIENT_SECRET"));
-            put("SCOPE", properties.getProperty(platform + "SCOPE"));
-            put("AUTH_URL", properties.getProperty(platform + "AUTH_URL"));
-            put("TOKEN_URL", properties.getProperty(platform + "TOKEN_URL"));
-            put("REDIRECT_URL", properties.getProperty(platform + "REDIRECT_URL"));
+            put("CLIENT_ID", properties.getProperty(platform + "_CLIENT_ID"));
+            put("CLIENT_SECRET", properties.getProperty(platform + "_CLIENT_SECRET"));
+            put("SCOPE", properties.getProperty(platform + "_SCOPE"));
+            put("AUTH_URL", properties.getProperty(platform + "_AUTH_URL"));
+            put("TOKEN_URL", properties.getProperty(platform + "_TOKEN_URL"));
+            put("REDIRECT_URL", properties.getProperty(platform + "_REDIRECT_URL"));
 
         }};
 
