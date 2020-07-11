@@ -6,15 +6,15 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import nyu.zc1069.converter.model.Basetrack;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class OAuthService {
     private HashMap<String, String> clientInfo;
@@ -22,25 +22,50 @@ public class OAuthService {
     private HashMap<String, String> verifierMap = new HashMap<String, String>();
 
     public OAuthService(String platform)  {
-        if (platform == "GOOGLE"){
-            clientInfo = new HashMap<String, String>(){{
-                put("CLIENT_ID", "321071089338-6hlb9h02kql4g1op8nsbkbfpf46d28h7.apps.googleusercontent.com");
-                put("CLIENT_SECRET", "GHdRHDIq9W3vk3jpYSDOQ5_I");
-                put("SCOPE", "https://www.googleapis.com/auth/youtube.readonly");
-                put("AUTH_URL", "https://accounts.google.com/o/oauth2/v2/auth");
-                put("TOKEN_URL", "https://oauth2.googleapis.com/token");
-                put("REDIRECT_URL", "http://localhost:8080/api/v1/youtube");
-            }};
-        }else{
-            clientInfo = new HashMap<String, String>(){{
-                put("CLIENT_ID", "4e553333356e4435a1fcfc3a2ef30562");
-                put("CLIENT_SECRET", "e256025d393d4c5c84a8b124acf9b404");
-                put("SCOPE", "user-read-email playlist-modify-private");
-                put("AUTH_URL", "https://accounts.spotify.com/authorize");
-                put("TOKEN_URL", "https://accounts.spotify.com/api/token");
-                put("REDIRECT_URL", "http://localhost:8080/api/v1/spotify");
-            }};
+        // read properties from config file
+        Properties properties = new Properties();
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream("config.properties");
+            properties.load(in);
+            in.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
         }
+
+        clientInfo = new HashMap<>(){{
+            put("CLIENT_ID", properties.getProperty(platform + "CLIENT_ID"));
+            put("CLIENT_SECRET", properties.getProperty(platform + "CLIENT_SECRET"));
+            put("SCOPE", properties.getProperty(platform + "SCOPE"));
+            put("AUTH_URL", properties.getProperty(platform + "AUTH_URL"));
+            put("TOKEN_URL", properties.getProperty(platform + "TOKEN_URL"));
+            put("REDIRECT_URL", properties.getProperty(platform + "REDIRECT_URL"));
+
+        }};
+
+//        if (platform == "GOOGLE"){
+//            clientInfo = new HashMap<String, String>(){{
+//                put("CLIENT_ID", "321071089338-6hlb9h02kql4g1op8nsbkbfpf46d28h7.apps.googleusercontent.com");
+//                put("CLIENT_SECRET", "GHdRHDIq9W3vk3jpYSDOQ5_I");
+//                put("SCOPE", "https://www.googleapis.com/auth/youtube.readonly");
+//                put("AUTH_URL", "https://accounts.google.com/o/oauth2/v2/auth");
+//                put("TOKEN_URL", "https://oauth2.googleapis.com/token");
+//                put("REDIRECT_URL", "http://localhost:8080/api/v1/youtube");
+//            }};
+//        }else{
+//            clientInfo = new HashMap<String, String>(){{
+//                put("CLIENT_ID", "4e553333356e4435a1fcfc3a2ef30562");
+//                put("CLIENT_SECRET", "e256025d393d4c5c84a8b124acf9b404");
+//                put("SCOPE", "user-read-email playlist-modify-private");
+//                put("AUTH_URL", "https://accounts.spotify.com/authorize");
+//                put("TOKEN_URL", "https://accounts.spotify.com/api/token");
+//                put("REDIRECT_URL", "http://localhost:8080/api/v1/spotify");
+//            }};
+//        }
     }
 
     /** platformPrefix can be GOOGLE or SPOTIFY*/
