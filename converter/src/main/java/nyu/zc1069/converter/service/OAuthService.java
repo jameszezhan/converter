@@ -43,26 +43,6 @@ public class OAuthService {
             put("REDIRECT_URL", properties.getProperty(platform + "_REDIRECT_URL"));
 
         }};
-
-//        if (platform == "GOOGLE"){
-//            clientInfo = new HashMap<String, String>(){{
-//                put("CLIENT_ID", "321071089338-6hlb9h02kql4g1op8nsbkbfpf46d28h7.apps.googleusercontent.com");
-//                put("CLIENT_SECRET", "GHdRHDIq9W3vk3jpYSDOQ5_I");
-//                put("SCOPE", "https://www.googleapis.com/auth/youtube.readonly");
-//                put("AUTH_URL", "https://accounts.google.com/o/oauth2/v2/auth");
-//                put("TOKEN_URL", "https://oauth2.googleapis.com/token");
-//                put("REDIRECT_URL", "http://localhost:8080/api/v1/youtube");
-//            }};
-//        }else{
-//            clientInfo = new HashMap<String, String>(){{
-//                put("CLIENT_ID", "4e553333356e4435a1fcfc3a2ef30562");
-//                put("CLIENT_SECRET", "e256025d393d4c5c84a8b124acf9b404");
-//                put("SCOPE", "user-read-email playlist-modify-private");
-//                put("AUTH_URL", "https://accounts.spotify.com/authorize");
-//                put("TOKEN_URL", "https://accounts.spotify.com/api/token");
-//                put("REDIRECT_URL", "http://localhost:8080/api/v1/spotify");
-//            }};
-//        }
     }
 
     /** platformPrefix can be GOOGLE or SPOTIFY*/

@@ -57,6 +57,18 @@ public class YouTubeService extends OAuthService {
                 body.put(playlistId, playlistJson);
             }
 
+            /** add liked video option*/
+            Basetrack likedListBaseTrack = this.constructBaseTrack(
+                    "liked",
+                    "Liked Videos",
+                    "youtube",
+                    "playlist",
+                    null
+            );
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String playlistJson = ow.writeValueAsString(likedListBaseTrack);
+            body.put("liked", playlistJson);
+
             output = this.constructApiReturnContent(body);
         } catch (UnirestException | JsonProcessingException e) {
             e.printStackTrace();
@@ -70,7 +82,11 @@ public class YouTubeService extends OAuthService {
         JSONObject body = new JSONObject();
         ArrayList<Basetrack> allTracks = new ArrayList<>();
         for(String playlistId: playlistIds) {
-            allTracks.addAll(getTracksFromId(uuid, playlistId));
+            if(playlistId.equals("liked")){
+                allTracks.addAll(getLikedVideos(uuid));
+            }else{
+                allTracks.addAll(getTracksFromId(uuid, playlistId));
+            }
         }
 
         try {
@@ -125,5 +141,47 @@ public class YouTubeService extends OAuthService {
         return tracksFromPlaylist;
     }
 
+    public ArrayList<Basetrack> getLikedVideos(String uuid){
+        HttpResponse<String> response = null;
+        ArrayList<Basetrack> likedTracks = new ArrayList<>();
+        JSONObject body = new JSONObject();
+        String accessToken = getTokenMap().get(uuid);
+        try {
+            response = Unirest.get("https://www.googleapis.com/youtube/v3/videos")
+                    .header("Authorization", "Bearer " + accessToken)
+                    .header("Accept", "application/json")
+                    .queryString("part", "snippet")
+                    .queryString("mine", "true")
+                    .queryString("myRating", "like")
+                    .queryString("maxResults", "20")
+                    .asString();
 
+            JSONObject resBody = new JSONObject(response.getBody());
+            JSONArray items = resBody.getJSONArray("items");
+
+            /** Construct custom body return from api returns*/
+            for(int i = 0; i < items.length(); i++){
+                JSONObject item = items.getJSONObject(i);
+                System.out.println(item);
+                JSONObject snippet = item.getJSONObject("snippet");
+                String playlistId = item.getString("id");
+                String playlistTitle = (String) snippet.getString("title");
+                String playlistPlatform = "youtube";
+                String playlistType = "playlist";
+                ArrayList<String> playlistTypeArtists = new ArrayList<>();
+                Basetrack likedBaseTrack = this.constructBaseTrack(
+                        playlistId,
+                        playlistTitle,
+                        playlistPlatform,
+                        playlistType,
+                        playlistTypeArtists
+                );
+                likedTracks.add(likedBaseTrack);
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return likedTracks;
+    }
 }
