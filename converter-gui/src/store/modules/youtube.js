@@ -15,7 +15,7 @@ const actions = {
     async fetchAllPlaylists( {state, commit, rootState} ){
         console.log(state);
         const response = await axios.get(
-            'http://127.0.0.1:8080/api/v1/youtube/playlist?state=' + rootState.uuids.uuids.youtube,
+            process.env.VUE_APP_API_BASE_URL + 'youtube/playlist?state=' + rootState.uuids.uuids.youtube,
             {
                 headers:{
                     Accept: "application/json"
@@ -41,7 +41,7 @@ const actions = {
         var data = JSON.stringify(ids);
         const response = await axios({
           method:"post",
-          url: "http://127.0.0.1:8080/api/v1/youtube/tracks?state=" + rootState.uuids.uuids.youtube,
+          url: process.env.VUE_APP_API_BASE_URL + "youtube/tracks?state=" + rootState.uuids.uuids.youtube,
           headers: { 
             'Content-Type': 'application/json'
           },
