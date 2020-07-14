@@ -12,22 +12,24 @@ const getters = {
 };
 
 const actions = {
-    async fetchAllPlaylists( {state, commit, rootState} ){
+    async fetchAllPlaylists( {state, commit, rootState, dispatch} ){
         console.log(state);
-        const response = await axios.get(
+        axios.get(
             process.env.VUE_APP_API_BASE_URL + 'youtube/playlist?state=' + rootState.uuids.uuids.youtube,
             {
                 headers:{
                     Accept: "application/json"
                 }
             }
-        );
-        var playlists = utility.parseApiResponse(response);
-
-        commit("setPlaylists", playlists)
+        ).then(function(response){
+            var playlists = utility.parseApiResponse(response);
+            commit("setPlaylists", playlists)
+        }).catch(function(error){
+            dispatch("setError", error, {root:true});
+        });
     },
 
-    async getTracksFromPlaylists( {state, commit, rootState} ){
+    async getTracksFromPlaylists( {state, commit, rootState, dispatch} ){
         console.log(state);
         var ids = [];
         state.playlists.map(
@@ -39,15 +41,18 @@ const actions = {
         )
         console.log(ids);
         var data = JSON.stringify(ids);
-        const response = await axios({
+        axios({
           method:"post",
           url: process.env.VUE_APP_API_BASE_URL + "youtube/tracks?state=" + rootState.uuids.uuids.youtube,
           headers: { 
             'Content-Type': 'application/json'
           },
           data: data
+        }).then(function(response){
+            commit("setTracks", response.data)
+        }).catch(function(error){
+            dispatch("setError", error, {root:true});
         });
-        commit("setTracks", response.data)
     },
 
     async toggleAll( {commit}, status){
