@@ -6,9 +6,39 @@
       <router-link to="/step3">Step 3</router-link>
     </div>
     <router-view/>
+    <b-modal 
+      :active.sync="isDisplayErr"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal>
+      <DefaultApiErrorModal />
+    </b-modal>
+    <button @click=toggleErrModal></button>
   </div>
 </template>
 
+<script>
+// @ is an alias to /src
+import DefaultApiErrorModal from '@/components/Modals/DefaultApiErrorModal.vue'
+import Vue from 'vue'
+import { Modal } from 'buefy'
+import { mapGetters, mapActions } from "vuex";
+
+Vue.use(Modal)
+
+export default {
+  name: 'App',
+  components: {
+    DefaultApiErrorModal,
+  },
+  methods: {
+      ...mapActions(["toggleErrModal"])
+  },
+  computed: mapGetters(['isDisplayErr'])
+}
+</script>
 
 <style>
 body{
