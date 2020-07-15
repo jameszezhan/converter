@@ -8,8 +8,8 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-//@CrossOrigin(origins = "http://localhost:8081")
-@CrossOrigin(origins = "http://127.0.0.1:8081")
+@CrossOrigin(origins = "http://localhost:8081")
+//@CrossOrigin(origins = "http://127.0.0.1:8081")
 @RequestMapping("api/v1/youtube")
 @RestController
 public class YouTubeController {
@@ -53,5 +53,17 @@ public class YouTubeController {
         String response = youTubeService.getTracks(state, playlistIds);
         System.out.println(response);
         return response;
+    }
+
+    @RequestMapping("verify")
+    @PostMapping
+    public Boolean VerifyLogIn(
+            @RequestParam("state") String state
+    ){
+        String token = youTubeService.attemptGetAccessToken(state);
+        if(token.equals("")){
+            return false;
+        }
+        return true;
     }
 }

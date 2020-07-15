@@ -5,6 +5,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import nyu.zc1069.converter.model.Basetrack;
 import org.json.JSONObject;
+import org.springframework.context.NoSuchMessageException;
 
 import java.io.*;
 import java.net.URLEncoder;
@@ -141,5 +142,13 @@ public class OAuthService {
 
     public String constructApiReturnContent(JSONObject body){
         return body.toString();
+    }
+
+    public String attemptGetAccessToken(String uuid){
+        if (this.tokenMap.containsKey(uuid)){
+            return this.tokenMap.get(uuid);
+        } else{
+            return "";
+        }
     }
 }
