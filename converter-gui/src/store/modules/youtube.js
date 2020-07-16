@@ -57,6 +57,10 @@ const actions = {
 
     async toggleAll( {commit}, status){
         commit("toggleAll", status);
+    },
+
+    resetName ( {commit}, trackId ){
+        commit("resetName", trackId);
     }
 };
 
@@ -73,7 +77,10 @@ const mutations = {
     },
     setTracks: (state, tracks) => {
         state.tracks = tracks;
-        state.tracks.map(track => track.checked = true)
+        state.tracks.map(track => {
+            track.checked = true
+            track.original = track.name
+        })
     },
     toggleAll: (state, status) => {
         state.tracks = state.tracks.map(
@@ -83,6 +90,13 @@ const mutations = {
             }
         )
         console.log(state.tracks);
+    },
+    resetName: (state, trackId) => {
+        state.tracks.map(track => {
+            if(track.id === trackId){
+                track.name = track.original
+            }
+        })
     }
 };
 

@@ -2,12 +2,12 @@
     <div class="card">
         <div class="list">
             <div>Edit Names</div>
-            <div v-for="ytTrack in allYtTracks" v-bind:key="ytTrack.id">
-                <b-input v-model=ytTrack.id ></b-input>
-                <b-button>Submit</b-button>
+            <div class ="item" v-for="ytTrack in allYtTracks" v-bind:key="ytTrack.id">
+                <b-input class="item-name" v-model=ytTrack.name></b-input>
+                <b-button class="item-cancel" @on-click="resetName(ytTrack.id)">Cancel</b-button>
             </div>
         </div>
-        <b-button @click="$parent.close()" class="sticky">Cancel</b-button>
+        <b-button @click="$parent.close()" class="sticky">Close</b-button>
     </div>
     
 </template>
@@ -22,9 +22,26 @@ Vue.use(Icon)
 export default {
   name: 'EditYtTrackNames',
   methods: {
-      ...mapActions([]),
+      ...mapActions(["resetName"]),
   },
   computed: mapGetters(['allYtTracks'])
 }
 </script>
 
+<style scoped>
+.item{
+    margin-bottom: 10px;
+}
+.item-name{
+    display: inline-block;
+    width: 80%;
+}
+.item-cancel{
+    display: inline-block;
+    margin: 0px auto;
+    min-width: 15%;
+    width: 15%;
+    max-width: 15%;
+    float: right;
+}
+</style>

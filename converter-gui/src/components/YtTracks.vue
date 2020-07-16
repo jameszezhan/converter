@@ -12,7 +12,7 @@
             <div class="list">
               <div v-for="track in allYtTracks" v-bind:key="track.id">
                   <b-checkbox v-model="track.checked" type="is-success">
-                    {{track.displayTitle}} 
+                    {{track.name}} 
                   </b-checkbox>
               </div>
             </div>
