@@ -17,6 +17,9 @@
               </div>
             </div>
             <div class="action">
+              <b-button @click="isEditYeTrackNamesActive=true" class="small">Edit Names</b-button>
+            </div>
+            <div class="action">
               <b-button @click="toggleAll(false)" type="is-danger" class="small">Deselect All</b-button>
               <b-button @click="toggleAll(true)" type="is-success" class="small">Select All</b-button>
             </div>
@@ -61,6 +64,14 @@
           <Alternatives />
         </b-modal>
         
+        <b-modal 
+          :active.sync="isEditYeTrackNamesActive"
+          trap-focus
+          :destroy-on-hide="false"
+          aria-role="dialog"
+          aria-modal>
+          <EditYtTrackNames />
+        </b-modal>
   </div>
 </template>
 
@@ -69,6 +80,7 @@ import { mapGetters, mapActions } from "vuex";
 import Vue from 'vue'
 import { Modal, Select } from 'buefy'
 import Alternatives from '@/components/Modals/Alternatives.vue'
+import EditYtTrackNames from '@/components/Modals/EditYtTrackNames.vue'
 
 Vue.use(Modal)
 Vue.use(Select)
@@ -76,10 +88,12 @@ export default {
   name: 'YtTracks',
   components: {
     Alternatives,
+    EditYtTrackNames
   },
   data(){
     return {
       isAltModalActive:false,
+      isEditYeTrackNamesActive:false,
       localAltSelections:{}
     }
   },
