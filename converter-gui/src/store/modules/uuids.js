@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const namespaced = true;
+
 const state = {
     uuids:{
         youtube: "initial",
@@ -39,6 +41,7 @@ const mutations = {
 };
 
 export default {
+    namespaced,
     state,
     getters,
     actions,

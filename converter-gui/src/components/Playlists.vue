@@ -54,7 +54,10 @@ export default {
     }
   },
   methods: {
-      ...mapActions(["fetchAllPlaylists", "authenticateYouTube"]),
+      ...mapActions({
+        fetchAllPlaylists: "fetchAllPlaylists", 
+        authenticateYouTube: "uuids/authenticateYouTube"
+      }),
       isAuthorizeFetchOkay(){
         if(this.allUUIDS.youtube !== "initial"){
           this.fetchAllPlaylists();
@@ -73,7 +76,10 @@ export default {
         }
       }
   },
-  computed: mapGetters(['allPlaylists', 'allUUIDS'])
+  computed: mapGetters({
+    allPlaylists: 'allPlaylists', 
+    allUUIDS:'uuids/allUUIDS'
+  })
 }
 </script>
 
