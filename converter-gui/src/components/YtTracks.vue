@@ -98,7 +98,12 @@ export default {
     }
   },
   methods: {
-      ...mapActions(["getTracksFromPlaylists", "fetchRecommendations", "toggleAll", "resetRecommendation"]),
+      ...mapActions({
+        getTracksFromPlaylists: "getTracksFromPlaylists", 
+        fetchRecommendations: "spotify/fetchRecommendations", 
+        toggleAll: "toggleAll", 
+        resetRecommendation: "spotify/resetRecommendation"
+      }),
       canProceed: function(){
         if(!this.allYtTracks.length > 0 || !this.allRecommendations.length > 0 ){
           return "hidden";
@@ -127,7 +132,11 @@ export default {
         }
       }
   },
-  computed: mapGetters(['allPlaylists', 'allYtTracks', 'allRecommendations'])
+  computed: mapGetters({
+    allPlaylists: 'allPlaylists', 
+    allYtTracks: 'allYtTracks', 
+    allRecommendations: 'spotify/allRecommendations'
+  })
 }
 </script>
 

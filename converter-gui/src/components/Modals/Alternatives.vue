@@ -28,9 +28,11 @@ Vue.use(Select)
 export default {
   name: 'Alternatives',
   methods: {
-      ...mapActions(["resetRecommendation"]),
+      ...mapActions({resetRecommendation: "spotify/resetRecommendation"}),
   },
-  computed: mapGetters(['allRecommendations'])
+  computed: mapGetters({
+      allRecommendations: 'spotify/allRecommendations'
+    })
 }
 </script>
 

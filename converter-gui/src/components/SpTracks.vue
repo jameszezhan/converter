@@ -35,7 +35,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchRecommendations", "startMigration", "authenticateSpotify"]),
+    ...mapActions({
+      fetchRecommendations: "spotify/fetchRecommendations", 
+      startMigration: "spotify/startMigration", 
+      authenticateSpotify: "uuids/authenticateSpotify"
+    }),
     isAuthorizeFetchOkay(){
       if(this.allUUIDS.spotify !== "initial"){
         this.startMigration();
@@ -62,7 +66,11 @@ export default {
       }
     }
   },
-  computed: mapGetters(['allUUIDS', 'allRecommendations', 'allPlaylists'])
+  computed: mapGetters({
+    allUUIDS: 'uuids/allUUIDS', 
+    allRecommendations: 'spotify/allRecommendations', 
+    allPlaylists: 'allPlaylists'
+  })
 }
 </script>
 

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as utility from './utility'
 
+const namespaced = true;
+
 const state = {
     recommendations:[]
 };
@@ -91,6 +93,7 @@ const mutations = {
 };
 
 export default {
+    namespaced,
     state,
     getters,
     actions,
