@@ -4,7 +4,11 @@
             <div>Edit Names</div>
             <div class ="item" v-for="ytTrack in allYtTracks" v-bind:key="ytTrack.id">
                 <b-input class="item-name" v-model=ytTrack.name></b-input>
-                <b-button class="item-cancel" @on-click="resetName(ytTrack.id)">Cancel</b-button>
+                <b-dropdown aria-role="list" class="is-pulled-right" position="is-bottom-left">
+                    <b-icon icon="dots-vertical" slot="trigger"></b-icon>
+                    <b-dropdown-item aria-role="listitem" @click="resetName(ytTrack.id)">Reset</b-dropdown-item>
+                    <b-dropdown-item aria-role="listitem" @click="toggleCheckbox(ytTrack.id)">Remove</b-dropdown-item>
+                </b-dropdown>
             </div>
         </div>
         <b-button @click="$parent.close()" class="sticky">Close</b-button>
@@ -15,14 +19,15 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Vue from 'vue'
-import { Modal, Input, Icon } from 'buefy'
+import { Modal, Input, Icon, Dropdown } from 'buefy'
 Vue.use(Modal)
 Vue.use(Input)
 Vue.use(Icon)
+Vue.use(Dropdown)
 export default {
   name: 'EditYtTrackNames',
   methods: {
-      ...mapActions(["resetName"]),
+      ...mapActions(["resetName", "toggleCheckbox"]),
   },
   computed: mapGetters(['allYtTracks'])
 }

@@ -61,6 +61,10 @@ const actions = {
 
     resetName ( {commit}, trackId ){
         commit("resetName", trackId);
+    },
+
+    toggleCheckbox ( {commit}, trackId ){
+        commit("toggleCheckbox", trackId);
     }
 };
 
@@ -95,6 +99,13 @@ const mutations = {
         state.tracks.map(track => {
             if(track.id === trackId){
                 track.name = track.original
+            }
+        })
+    }, 
+    toggleCheckbox: (state, trackId) => {
+        state.tracks.map(track => {
+            if(track.id === trackId){
+                track.checked = !track.checked
             }
         })
     }
