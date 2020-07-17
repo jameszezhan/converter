@@ -38,8 +38,8 @@
               <b-button @click="isAltModalActive=true" class="small">Alternatives</b-button>
             </div>
             <div class="action">
-              <b-button @click="toggleAll(false)" type="is-danger" class="small">Deselect All</b-button>
-              <b-button @click="toggleAll(true)" type="is-success" class="small">Select All</b-button>
+              <b-button @click="toggleAllSp(false)" type="is-danger" class="small">Deselect All</b-button>
+              <b-button @click="toggleAllSp(true)" type="is-success" class="small">Select All</b-button>
             </div>
           </div>
 
@@ -102,6 +102,7 @@ export default {
         getTracksFromPlaylists: "getTracksFromPlaylists", 
         fetchRecommendations: "spotify/fetchRecommendations", 
         toggleAll: "toggleAll", 
+        toggleAllSp: "spotify/toggleAll", 
         resetRecommendation: "spotify/resetRecommendation"
       }),
       canProceed: function(){

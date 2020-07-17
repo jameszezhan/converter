@@ -64,7 +64,10 @@ const actions = {
     },
     resetRecommendation({commit}){
         commit("resetRecommendation");
-    }
+    },
+    toggleAll( {commit}, status){
+        commit("toggleAll", status);
+    },
 };
 
 const mutations = {
@@ -89,6 +92,14 @@ const mutations = {
         state.recommendations.map(recommendation => {
             recommendation.chosenIndex = 0;
         })
+    },
+    toggleAll: (state, status) => {
+        state.recommendations = state.recommendations.map(
+            recommendation => {
+                recommendation.checked = status
+                return recommendation;
+            }
+        )
     }
 };
 
