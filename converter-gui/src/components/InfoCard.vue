@@ -2,6 +2,8 @@
   <div class="card">
     <div>Name: {{trackItem.name}}</div>
     <div>Artists: {{trackItem.artists}}</div>  
+    <div>Description: {{trackItem.description}}</div>  
+
   </div>
 </template>
 

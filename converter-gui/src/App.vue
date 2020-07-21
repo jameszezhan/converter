@@ -33,7 +33,7 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  max-width: 800px;
+  max-width: 1080px;
   margin: auto;
 }
 
@@ -88,7 +88,7 @@ a {
   overflow-x: hidden;
 }
 .half{
-  width: 45%;
+  width: 49%;
   display: inline-block;
   float: left;
 }
@@ -105,5 +105,8 @@ a {
 .card{
     padding: 20px;
     border-radius: 20px;
+}
+.spread-between{
+  justify-content: space-between;
 }
 </style>

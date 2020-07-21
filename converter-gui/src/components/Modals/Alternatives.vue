@@ -36,3 +36,9 @@ export default {
 }
 </script>
 
+<style scoped>
+.card{
+    max-height: 600px;
+    overflow-y: scroll;
+}
+</style>

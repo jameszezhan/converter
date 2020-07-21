@@ -19,7 +19,7 @@
                     @open="isOpen = index"
                     :open="isOpen == index">
                     <div 
-                      class="card-header-icon"
+                      class="card-header-icon spread-between"
                       slot="trigger" 
                       slot-scope="props" >
                       <div class="card-header-icon">
@@ -170,5 +170,8 @@ export default {
 .card-header-icon{
   justify-content: start;
   padding: 0px;
+}
+.spread-between{
+  justify-content: space-between;
 }
 </style>
