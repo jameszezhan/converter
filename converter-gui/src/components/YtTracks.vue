@@ -10,10 +10,31 @@
         <div>
           <div class="half" v-bind:class="showList('youtube')">
             <div class="list">
-              <div v-for="track in allYtTracks" v-bind:key="track.id">
-                  <b-checkbox v-model="track.checked" type="is-success">
-                    {{track.name}} 
-                  </b-checkbox>
+              <div
+                v-for="(track, index) in allYtTracks" 
+                v-bind:key="track.id" >
+                  
+                  <b-collapse
+                    animation="slide"
+                    @open="isOpen = index"
+                    :open="isOpen == index">
+                    <div 
+                      class="card-header-icon"
+                      slot="trigger" 
+                      slot-scope="props" >
+                      <div class="card-header-icon">
+                        <b-checkbox 
+                          v-model="track.checked" 
+                          type="is-success">
+                        </b-checkbox>
+                        <p>{{track.name}}</p>
+                      </div>
+                      <b-icon
+                          :icon="props.open ? 'menu-down' : 'menu-up'">
+                      </b-icon>
+                    </div>
+                    <InfoCard :id= track.id />
+                  </b-collapse>
               </div>
             </div>
             <div class="action">
@@ -78,20 +99,24 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Vue from 'vue'
-import { Modal, Select } from 'buefy'
+import { Modal, Select, Collapse } from 'buefy'
 import Alternatives from '@/components/Modals/Alternatives.vue'
 import EditYtTrackNames from '@/components/Modals/EditYtTrackNames.vue'
+import InfoCard from '@/components/InfoCard.vue'
 
 Vue.use(Modal)
 Vue.use(Select)
+Vue.use(Collapse)
 export default {
   name: 'YtTracks',
   components: {
     Alternatives,
-    EditYtTrackNames
+    EditYtTrackNames,
+    InfoCard
   },
   data(){
     return {
+      isOpen: 0,
       isAltModalActive:false,
       isEditYeTrackNamesActive:false,
       localAltSelections:{}
@@ -141,3 +166,9 @@ export default {
 }
 </script>
 
+<style scoped>
+.card-header-icon{
+  justify-content: start;
+  padding: 0px;
+}
+</style>
