@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-      Information
-      <!-- <p>{{id}}</p> -->
+    <div>Name: {{trackItem.name}}</div>
+    <div>Artists: {{trackItem.artists}}</div>  
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
     name: 'InfoCard',
-    props: ['id'],
+    props: ['trackItem'],
     computed: mapGetters({
         allYtTracks: 'allYtTracks'
     }),

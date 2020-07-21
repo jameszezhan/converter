@@ -33,7 +33,7 @@
                           :icon="props.open ? 'menu-down' : 'menu-up'">
                       </b-icon>
                     </div>
-                    <InfoCard :id= track.id />
+                    <InfoCard :trackItem= track />
                   </b-collapse>
               </div>
             </div>
