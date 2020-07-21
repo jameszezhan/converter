@@ -9,6 +9,7 @@ public class Basetrack {
     private final String type;
     private final ArrayList<String> artists;
     private final String displayTitle;
+    private final String description;
 
     public Basetrack(
             String id,
@@ -16,8 +17,10 @@ public class Basetrack {
             String platform,
             String type,
             ArrayList<String> artists,
-            String displayTitle
+            String displayTitle,
+            String description
     ) {
+        this.description = description;
         this.id = id;
         this.name = name;
         this.platform = platform;
@@ -48,5 +51,9 @@ public class Basetrack {
 
     public String getDisplayTitle() {
         return displayTitle;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

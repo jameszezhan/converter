@@ -42,6 +42,7 @@ public class YouTubeService extends OAuthService {
                 JSONObject snippet = item.getJSONObject("snippet");
                 String playlistId = item.getString("id");
                 String playlistTitle = (String) snippet.getString("title");
+                String playlistDescription = (String) snippet.getString("description");
                 String playlistPlatform = "youtube";
                 String playlistType = "playlist";
                 ArrayList<String> playlistTypeArtists = new ArrayList<>();
@@ -50,7 +51,8 @@ public class YouTubeService extends OAuthService {
                         playlistTitle,
                         playlistPlatform,
                         playlistType,
-                        playlistTypeArtists
+                        playlistTypeArtists,
+                        playlistDescription
                 );
                 ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
                 String playlistJson = ow.writeValueAsString(playlistBaseTrack);
@@ -63,7 +65,8 @@ public class YouTubeService extends OAuthService {
                     "Liked Videos",
                     "youtube",
                     "playlist",
-                    null
+                    null,
+                    "Liked Videos"
             );
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String playlistJson = ow.writeValueAsString(likedListBaseTrack);
@@ -108,7 +111,7 @@ public class YouTubeService extends OAuthService {
             response = Unirest.get("https://www.googleapis.com/youtube/v3/playlistItems")
                     .header("Authorization", "Bearer " + accessToken)
                     .header("Accept", "application/json")
-                    .queryString("part", "snippet")
+                    .queryString("part", "snippet,contentDetails")
                     .queryString("maxResults", "500")
                     .queryString("playlistId", playlistId)
                     .asJson();
@@ -121,6 +124,7 @@ public class YouTubeService extends OAuthService {
                 JSONObject snippet = item.getJSONObject("snippet");
 
                 String trackId = item.getString("id");
+                String trackDescription = snippet.getString("description");
                 String trackTitle = snippet.getString("title");
                 String playlistPlatform = "youtube";
                 String playlistType = "playlist";
@@ -130,7 +134,8 @@ public class YouTubeService extends OAuthService {
                         trackTitle,
                         playlistPlatform,
                         playlistType,
-                        playlistTypeArtists
+                        playlistTypeArtists,
+                        trackDescription
                 );
                 tracksFromPlaylist.add(playlistBaseTrack);
             }
@@ -166,6 +171,7 @@ public class YouTubeService extends OAuthService {
                 JSONObject snippet = item.getJSONObject("snippet");
                 String playlistId = item.getString("id");
                 String playlistTitle = (String) snippet.getString("title");
+                String playlistDescription = snippet.getString("description");
                 String playlistPlatform = "youtube";
                 String playlistType = "playlist";
                 ArrayList<String> playlistTypeArtists = new ArrayList<>();
@@ -174,7 +180,8 @@ public class YouTubeService extends OAuthService {
                         playlistTitle,
                         playlistPlatform,
                         playlistType,
-                        playlistTypeArtists
+                        playlistTypeArtists,
+                        playlistDescription
                 );
                 likedTracks.add(likedBaseTrack);
             }

@@ -71,7 +71,8 @@ public class SpotifyService extends OAuthService{
                         title,
                         platform,
                         type,
-                        artists
+                        artists,
+                        ""
                 );
                 options.add(basetrack);
 

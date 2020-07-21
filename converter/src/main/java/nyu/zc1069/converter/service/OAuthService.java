@@ -133,10 +133,11 @@ public class OAuthService {
             String name,
             String platform,
             String type,
-            ArrayList<String> artists
+            ArrayList<String> artists,
+            String description
     ){
         String displayTitle = name;
-        Basetrack baseTrack = new Basetrack(id, name, platform, type, artists, name);
+        Basetrack baseTrack = new Basetrack(id, name, platform, type, artists, name,description);
         return baseTrack;
     }
 
