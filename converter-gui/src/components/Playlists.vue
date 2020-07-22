@@ -3,7 +3,7 @@
     <!-- <b-button @click="isAuthorizeFetchOkay">toggle</b-button> -->
     <b-button @click="isAuthorizeFetchOkay">Get Playlists</b-button>
     
-    <div class="list" v-bind:class="showList()">
+    <div class="pl-list" v-bind:class="showList()">
       <div v-for="playlist in allPlaylists" v-bind:key="playlist.id">
         <b-checkbox v-model="playlist.checked" type="is-success">
           {{playlist.displayTitle}}
@@ -85,5 +85,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.pl-list{
+  margin: auto;
+  width: 300px;
+}
 </style>

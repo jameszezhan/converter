@@ -38,11 +38,17 @@
               </div>
             </div>
             <div class="action">
-              <b-button @click="isEditYeTrackNamesActive=true" class="small">Edit Names</b-button>
-            </div>
-            <div class="action">
               <b-button @click="toggleAll(false)" type="is-danger" class="small">Deselect All</b-button>
               <b-button @click="toggleAll(true)" type="is-success" class="small">Select All</b-button>
+            </div>
+            <div class="stats card">
+              <div>I found <strong>{{allYtTracks.length}}</strong> videos</div>
+              <div>
+                <div>Please try to remove elements like artists name and special characters before moving forward</div>
+                <div>You can do this with the 
+                  <b-button @click="isEditYeTrackNamesActive=true" type="is-small" class="small alt">Edit Names</b-button>
+                button</div>
+              </div>
             </div>
           </div>
 
@@ -56,11 +62,17 @@
               </div>
             </div>
             <div class="action">
-              <b-button @click="isAltModalActive=true" class="small">Alternatives</b-button>
-            </div>
-            <div class="action">
               <b-button @click="toggleAllSp(false)" type="is-danger" class="small">Deselect All</b-button>
               <b-button @click="toggleAllSp(true)" type="is-success" class="small">Select All</b-button>
+            </div>
+            <div class="stats card">
+              <div>I found <strong>{{allRecommendations.length}}</strong> songs</div>
+              <div>
+                <div>You can select alternatives of these songs</div>
+                <div>You can do this with the 
+                  <b-button @click="isAltModalActive=true" type="is-small" class="small alt">Alternatives</b-button>
+                button</div>
+              </div>
             </div>
           </div>
 
@@ -173,5 +185,9 @@ export default {
 }
 .spread-between{
   justify-content: space-between;
+}
+.small.alt{
+  margin: auto;
+  width: auto;
 }
 </style>
