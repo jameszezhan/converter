@@ -49,9 +49,10 @@ public class SpotifyController {
     @PostMapping
     public String migrate(
             @RequestBody ArrayList<String> trackIds,
-            @RequestParam("state") String state
+            @RequestParam("state") String state,
+            @RequestParam("name") String playlistName
     ){
-        String playlistId = spotifyService.createPlaylist(state);
+        String playlistId = spotifyService.createPlaylist(state, playlistName);
         spotifyService.addTracksToPlaylist(playlistId, state, trackIds);
         return playlistId;
     }

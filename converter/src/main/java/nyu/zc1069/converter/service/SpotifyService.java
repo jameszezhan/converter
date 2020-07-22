@@ -123,7 +123,7 @@ public class SpotifyService extends OAuthService{
         }
     }
 
-    public String createPlaylist(String uuid){
+    public String createPlaylist(String uuid, String playlistName){
         if (userIdMap.get(uuid) == null){
             fetchAndSetUserId(uuid);
         }
@@ -134,7 +134,7 @@ public class SpotifyService extends OAuthService{
         HttpResponse<String> response = null;
         try{
             JSONObject payload = new JSONObject();
-            payload.put("name", "mig2");
+            payload.put("name", playlistName);
             payload.put("public", false);
             response = Unirest.post(url)
                     .header("content-type", "application/json")

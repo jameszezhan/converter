@@ -1,6 +1,17 @@
 <template>
-  <div class="hello">
-    <b-button @click="isAuthorizeFetchOkay" v-bind:class="isDisabled().class">Migrate</b-button>
+  <div>
+    <div class="pl-name">
+      <div>What would you like to call your new playlist?</div>
+      <b-field 
+            v-model="getPlaylistName"
+            label="Playlist Name"
+            type="is-info">
+            <b-input placeholder="playlist name" maxlength="30"></b-input>
+        </b-field>
+    </div>
+    <b-button type="is-link" @click="isAuthorizeFetchOkay" v-bind:class="isDisabled().class">            
+      Migrate
+    </b-button>
     <div v-bind:class="isDisabled().class">
       {{isDisabled().message}}
     </div>
@@ -67,6 +78,7 @@ export default {
     }
   },
   computed: mapGetters({
+    getPlaylistName: "spotify/getPlaylistName",
     allUUIDS: 'uuids/allUUIDS', 
     allRecommendations: 'spotify/allRecommendations', 
     allPlaylists: 'allPlaylists'
@@ -89,5 +101,9 @@ li {
 }
 a {
   color: #42b983;
+}
+.pl-name{
+  width: 400px;
+  margin: auto;
 }
 </style>

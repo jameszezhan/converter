@@ -4,11 +4,13 @@ import * as utility from './utility'
 const namespaced = true;
 
 const state = {
-    recommendations:[]
+    recommendations:[],
+    playlistName: "Migration"
 };
 
 const getters = {
-    allRecommendations: (state) => state.recommendations
+    allRecommendations: (state) => state.recommendations,
+    getPlaylistName: (state) => state.playlistName
 };
 
 const actions = {
@@ -54,7 +56,7 @@ const actions = {
         var data = JSON.stringify(spIds);
         const response = await axios({
             method: "post",
-            url: process.env.VUE_APP_API_BASE_URL + 'spotify/migrate?state='+rootState.uuids.uuids.spotify,
+            url: process.env.VUE_APP_API_BASE_URL + 'spotify/migrate?state='+rootState.uuids.uuids.spotify + "&name="+state.playlistName,
             headers: { 
                 'Content-Type': 'application/json'
             },
