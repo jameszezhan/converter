@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div v-if="Object.keys(getErrorMessage).length > 0">
       error area {{getErrorMessage}}
   </div>
 </template>

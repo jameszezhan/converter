@@ -1,5 +1,5 @@
 const state = {
-    errorMessage: null 
+    errorMessage: {} 
 };
 
 const getters = {
@@ -18,7 +18,7 @@ const actions = {
 
 const mutations = {
     setError: (state, errorMessage) => state.errorMessage = errorMessage,
-    clearError: (state) => state.errorMessage = null
+    clearError: (state) => state.errorMessage = {}
 };
 
 export default {
