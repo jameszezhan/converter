@@ -136,9 +136,19 @@ public class OAuthService {
             ArrayList<String> artists,
             String description
     ){
-        String displayTitle = name;
-        Basetrack baseTrack = new Basetrack(id, name, platform, type, artists, name,description);
-        return baseTrack;
+        String artistsStr = "";
+        if(artists != null){
+            int bound = Math.min(artists.size(), 3);
+            for(int i = 0; i < bound; i ++){
+                if (artists.get(i) != null){
+                    artistsStr = artistsStr + " " + artists.get(i);
+                }else{
+                    break;
+                }
+            }
+        }
+        String displayTitle = artistsStr.length() > 0 ? "<strong>" + name + "</strong> by " + artistsStr : name;
+        return new Basetrack(id, name, platform, type, artists, displayTitle, description);
     }
 
     public String constructApiReturnContent(JSONObject body){
