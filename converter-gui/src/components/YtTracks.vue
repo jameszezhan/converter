@@ -57,7 +57,8 @@
             <div class="list">
               <div v-for="recommendation in allRecommendations" v-bind:key="recommendation.options[recommendation.chosenIndex].id">
                   <b-checkbox v-model="recommendation.checked" type="is-success">
-                    {{recommendation.options[recommendation.chosenIndex].name}}  
+                    <DisplayTitle :track = recommendation.options[recommendation.chosenIndex] />
+                    <!-- {{.displayTitle}}   -->
                   </b-checkbox>
               </div>
             </div>
@@ -115,6 +116,7 @@ import { Modal, Select, Collapse } from 'buefy'
 import Alternatives from '@/components/Modals/Alternatives.vue'
 import EditYtTrackNames from '@/components/Modals/EditYtTrackNames.vue'
 import InfoCard from '@/components/InfoCard.vue'
+import DisplayTitle from '@/components/DisplayTitle.vue'
 
 Vue.use(Modal)
 Vue.use(Select)
@@ -124,7 +126,8 @@ export default {
   components: {
     Alternatives,
     EditYtTrackNames,
-    InfoCard
+    InfoCard,
+    DisplayTitle
   },
   data(){
     return {

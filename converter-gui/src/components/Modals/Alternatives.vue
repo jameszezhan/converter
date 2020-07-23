@@ -11,7 +11,8 @@
                 v-for="(option, index) in recommendation.options" 
                 v-bind:key="option.uri"
                 v-bind:value="index">
-                {{option.name}} 
+                <DisplayTitle :track = option />
+                 
                 </option>
             </b-select>
         </div>
@@ -23,10 +24,15 @@
 import { mapGetters, mapActions } from "vuex";
 import Vue from 'vue'
 import { Modal, Select } from 'buefy'
+import DisplayTitle from '@/components/DisplayTitle.vue'
+
 Vue.use(Modal)
 Vue.use(Select)
 export default {
   name: 'Alternatives',
+  components: {
+      DisplayTitle
+  },
   methods: {
       ...mapActions({resetRecommendation: "spotify/resetRecommendation"}),
   },
