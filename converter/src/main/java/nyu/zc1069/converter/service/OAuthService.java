@@ -22,17 +22,15 @@ public class OAuthService {
     public OAuthService(String platform)  {
         // read properties from config file
         Properties properties = new Properties();
-        InputStream in = null;
+        FileInputStream in = null;
         try {
-            in = getClass().getClassLoader().getResourceAsStream("config.properties");
+            in = new FileInputStream("Application.properties");
             properties.load(in);
             in.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.exit(1);
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(1);
         }
 
         clientInfo = new HashMap<>(){{
@@ -44,6 +42,7 @@ public class OAuthService {
             put("REDIRECT_URL", properties.getProperty(platform + "_REDIRECT_URL"));
 
         }};
+
     }
 
     /** platformPrefix can be GOOGLE or SPOTIFY*/
