@@ -3,10 +3,10 @@ server {
     server_name zeehon.us;
 
     location /api/ {
-        proxy_pass apiservice:8000;
+        proxy_pass "http://apiservice:8000/";
     }
 
-    location /vue/ {
-        proxy_pass webgui:8000;
+    location /converter/ {
+        proxy_pass "http://webgui:8000/";
     }
 }
