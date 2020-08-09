@@ -1,15 +1,6 @@
 version: '3'
 services:
     web:
-        image: nginx
-        volumes:
-            - ./nginx/templates:/etc/nginx/templates
-            - ./nginx/certs:/etc/nginx/certs
-        ports:
-         - "80:80"
-         - "443:443"
-        environment:
-         - NGINX_HOST=zeehon.us
     webgui:
         image: jameszezhan/converter-gui:latest
         ports: 
@@ -19,22 +10,16 @@ services:
         ports: 
             - "8080:8080"
         environment:
-            GOOGLE_CLIENT_ID: 321071089338-6hlb9h02kql4g1op8nsbkbfpf46d28h7.apps.googleusercontent.com
-            GOOGLE_CLIENT_SECRET: GHdRHDIq9W3vk3jpYSDOQ5_I
+            GOOGLE_CLIENT_ID: ${YOUR_GOOGLE_CLIENT_ID}
+            GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
             GOOGLE_SCOPE: https://www.googleapis.com/auth/youtube.readonly
             GOOGLE_AUTH_URL: https://accounts.google.com/o/oauth2/v2/auth
             GOOGLE_TOKEN_URL: https://oauth2.googleapis.com/token
-            # GOOGLE_REDIRECT_URL: http://127.0.0.1:8080/api/v1/youtube #this is for deploying locally
-            GOOGLE_REDIRECT_URL: http://zeehon.us/converter/api/v1/youtube
-            SPOTIFY_CLIENT_ID: 4e553333356e4435a1fcfc3a2ef30562
-            SPOTIFY_CLIENT_SECRET: e256025d393d4c5c84a8b124acf9b404
+            GOOGLE_REDIRECT_URL: http://localhost:8080/api/v1/youtube #this is for deploying locally
+            SPOTIFY_CLIENT_ID: ${YOUR_SPOTIFY_CLIENT_ID}
+            SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
             SPOTIFY_SCOPE: user-read-email playlist-modify-private
             SPOTIFY_AUTH_URL: https://accounts.spotify.com/authorize
             SPOTIFY_TOKEN_URL: https://accounts.spotify.com/api/token
-            # SPOTIFY_REDIRECT_URL: http://127.0.0.1:8080/api/v1/spotify #this is for deploying locally
-            SPOTIFY_REDIRECT_URL: http://zeehon.us/converter/api/v1/spotify
+            SPOTIFY_REDIRECT_URL: http://localhost:8080/api/v1/spotify #this is for deploying locally
         command: "/opt/app/start.sh"
-
-
-
-
