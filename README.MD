@@ -10,10 +10,27 @@
 
 
 # How to run this project
-To run this project, you need to have Docker installed and use Docker in Swarm Mode.
-You can find more information how to run a single node Docker Swarm [here](https://docs.docker.com/engine/swarm/swarm-tutorial/create-swarm/).
+Prerequsite for running this project:
+* Docker Swarm 
+  
+  To run this project, you need to have Docker installed and use Docker in Swarm Mode. You can find more information how to run a single node Docker Swarm [here](https://docs.docker.com/engine/swarm/swarm-tutorial/create-swarm/).
+* YouTube Data API authorization credentials
+  
+  You will need a [YouTube Data API](https://developers.google.com/youtube/registering_an_application) OAuth crendentials for run this project as it uses YouTube Data API. Remember to whitelist `http://localhost:${API_PORT}/api/v1/youtube` on your Google API Console.
+  https://i.imgur.com/TPK7XKz.png
 
-After you have Docker Swarm setup, [download the compose file](https://github.com/jameszezhan/converter/blob/master/docker/converter-service.yml) and run: 
+* Spotify API authorization credentials
+  
+  Same as above, you will need a [Spotify Data API](https://developer.spotify.com/dashboard/) OAuth crendentials for run this project as it uses Spotify API. Remember to whitelist `http://localhost:${API_PORT}/api/v1/spotify` on your Google API Console.
+
+
+To run the application, [download the compose file](https://github.com/jameszezhan/converter/blob/master/docker/converter-service.yml) and change the following entries to your own:
+* GOOGLE_CLIENT_ID
+* GOOGLE_CLIENT_SECRET
+* SPOTIFY_CLIENT_ID
+* SPOTIFY_CLIENT_SECRET
+
+After chaning the credentials, run: 
 
 `docker stack deploy -c converter-service.yml cs`
 
