@@ -43,6 +43,9 @@ Then visit `localhost:8081` or the port you specified.
 
 You can read more about the project [here]().
 
+If you want to play with application without running it, you can visit https://zeehon.us/converter.
+
+
 
 # Mis Notes:
 ## Build converter-api image and deploy to a local docker registry
