@@ -1,7 +1,6 @@
 #! /bin/sh
 
 # start consumer
-echo "soething"
 CONFIG_FILE=Application.properties
 
 # GOOGLE CLIENT ID

@@ -7,7 +7,6 @@ FROM adoptopenjdk/openjdk11
 RUN mkdir /opt/app
 COPY --from=build /usr/src/app/target/*.jar /opt/app
 COPY start.sh /opt/app
-# CMD ["java", "-jar", "/opt/app/converter-0.0.1-SNAPSHOT.jar" ]
 
 
 
