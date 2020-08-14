@@ -41,7 +41,7 @@ If you want to use a different port for either webgui or api server, go into the
 
 Then visit `localhost:8081` or the port you specified.
 
-You can read more about the project [here]().
+You can read more about the project [here](https://medium.com/@zezhanchen/fullstack-with-vue-spring-boot-and-nginx-d22d13898d3e).
 
 If you want to play with application without running it, you can visit https://zeehon.us/converter.
 
