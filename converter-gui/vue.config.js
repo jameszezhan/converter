@@ -1,4 +1,6 @@
-// vue.config.js
 module.exports = {
-    publicPath: "/converter/"
+  "publicPath": "/converter/",
+  "transpileDependencies": [
+    "vuetify"
+  ]
 }
