@@ -1,10 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/step1">Step 1</router-link> |
-      <router-link to="/step2">Step 2</router-link> |
-      <router-link to="/step3">Step 3</router-link>
-    </div>
     <router-view/>
     <ErrorArea />
   </div>
