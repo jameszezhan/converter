@@ -2,14 +2,36 @@
   <div class="hello">
     <!-- <b-button @click="isAuthorizeFetchOkay">toggle</b-button> -->
     <b-button @click="isAuthorizeFetchOkay">Get Playlists</b-button>
-    
-    <div class="pl-list" v-bind:class="showList()">
-      <div v-for="playlist in allPlaylists" v-bind:key="playlist.id">
-        <b-checkbox v-model="playlist.checked" type="is-success">
-          {{playlist.displayTitle}}
-        </b-checkbox>
-      </div>
-    </div>
+    <v-card
+      class="mx-auto"
+      max-width="500"
+      title
+    >
+      <v-list>
+        <v-list-item-group>
+          <template v-for="playlist in allPlaylists">
+            <v-list-item
+              :key="playlist.id"
+              active-class="deep-purple--text text--accent-4"
+            >
+              <template v-slot:default="{ active }">
+                <v-list-item-content>
+                  <v-list-item-title v-text="playlist.displayTitle"></v-list-item-title>
+                </v-list-item-content>
+
+                <v-list-item-action>
+                  <v-checkbox
+                    :input-value="active"
+                    color="deep-purple accent-4"
+                  ></v-checkbox>
+                </v-list-item-action>
+              </template>
+            
+            </v-list-item>
+          </template>
+        </v-list-item-group>
+      </v-list>
+    </v-card>
 
     <b-modal 
       :active.sync="isImageModalActive"
