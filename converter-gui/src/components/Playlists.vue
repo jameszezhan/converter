@@ -14,14 +14,14 @@
               :key="playlist.id"
               active-class="deep-purple--text text--accent-4"
             >
-              <template v-slot:default="{ active }">
+              <template>
                 <v-list-item-content>
                   <v-list-item-title v-text="playlist.displayTitle"></v-list-item-title>
                 </v-list-item-content>
 
                 <v-list-item-action>
                   <v-checkbox
-                    :input-value="active"
+                    v-model="playlist.checked"
                     color="deep-purple accent-4"
                   ></v-checkbox>
                 </v-list-item-action>
