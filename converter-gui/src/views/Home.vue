@@ -24,7 +24,7 @@
           <v-btn color="primary" @click="e1 = 4">Continue</v-btn>
           <v-btn color="primary" @click="e1 = 2">Go back</v-btn>
       </v-stepper-content>
-      <v-stepper-content step="3">
+      <v-stepper-content step="4">
         <div>Success</div>
       </v-stepper-content>
     </v-stepper-items>

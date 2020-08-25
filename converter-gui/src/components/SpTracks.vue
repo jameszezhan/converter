@@ -53,7 +53,9 @@ export default {
     }),
     isAuthorizeFetchOkay(){
       if(this.allUUIDS.spotify !== "initial"){
-        this.startMigration();
+        this.startMigration().then(()=>{
+          console.log("Success");
+        });
       }else{
         this.isImageModalActive = true
       }
@@ -68,7 +70,7 @@ export default {
       if(!this.allRecommendations.length > 0){
         return {
           class:"disabled",
-          message:"Navigate back to step 2 and fetch migrate options."
+          message:"Navigate back to step 2 and fetch  options."
         };
       }
       return {

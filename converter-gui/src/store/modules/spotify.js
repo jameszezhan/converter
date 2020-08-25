@@ -62,7 +62,7 @@ const actions = {
             },
             data: data
         });
-        window.test = response;
+        return response;
     },
     resetRecommendation({commit}){
         commit("resetRecommendation");
