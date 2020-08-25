@@ -1,11 +1,17 @@
 <template>
   <div class="hello">
-    <!-- <b-button @click="isAuthorizeFetchOkay">toggle</b-button> -->
-    <b-button @click="isAuthorizeFetchOkay">Get Playlists</b-button>
+    <v-btn 
+      depressed
+      color="secdonary" 
+      @click="isAuthorizeFetchOkay"
+    >Get Playlists</v-btn>
+    <v-divider></v-divider>
+
     <v-card
       class="mx-auto"
       max-width="500"
       title
+      v-if="allPlaylists.length"
     >
       <v-list>
         <v-list-item-group>
@@ -46,15 +52,6 @@
         <p>Try getting playlists again after you're done</p>
       </div>
     </b-modal>
-
-
-    <b-button
-      v-bind:class="canProceed()"
-      tag="router-link"
-      to="/step2"
-      type="is-link">
-      next
-    </b-button>
   </div>
 </template>
 

@@ -16,10 +16,6 @@
                 v-for="(track) in allYtTracks"
                 :key="track.id"
               >
-              <div>
-
-              </div>
-              <div>
                 <v-expansion-panel-header>
                     <v-checkbox
                       v-model="track.checked"
@@ -31,7 +27,6 @@
                 <v-expansion-panel-content>
                   {{track.description}}
                 </v-expansion-panel-content>
-              </div>
               </v-expansion-panel>
             </v-expansion-panels>
           </v-row>

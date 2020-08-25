@@ -28,6 +28,8 @@
         <p>You can close this window after you're done</p>
       </div>
     </b-modal>
+          <v-btn color="primary" @click="e1 = 4">Continue</v-btn>
+
   </div>
 </template>
 
