@@ -10,12 +10,30 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import nyu.zc1069.converter.model.Basetrack;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+@Component
 public class YouTubeService extends OAuthService {
-    public YouTubeService(String platform) {
-        super(platform);
+    public YouTubeService() {
+        super("GOOGLE");
+    }
+
+    @PostConstruct
+    public HashMap<String, String> getClientInfo() {
+        if (this.clientInfo == null){
+            this.clientInfo = new HashMap<>();
+            this.clientInfo.put("CLIENT_ID", env.getGOOGLE_CLIENT_ID());
+            this.clientInfo.put("CLIENT_SECRET", env.getGOOGLE_CLIENT_SECRET());
+            this.clientInfo.put("SCOPE", env.getGOOGLE_SCOPE());
+            this.clientInfo.put("AUTH_URL", env.getGOOGLE_AUTH_URL());
+            this.clientInfo.put("TOKEN_URL", env.getGOOGLE_TOKEN_URL());
+            this.clientInfo.put("REDIRECT_URL", env.getGOOGLE_REDIRECT_URL());
+        }
+        return this.clientInfo;
     }
 
     public String getPlaylists(String uuid){

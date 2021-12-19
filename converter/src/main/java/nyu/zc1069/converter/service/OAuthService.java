@@ -7,7 +7,6 @@ import nyu.zc1069.converter.model.Basetrack;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import java.io.*;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
@@ -16,7 +15,7 @@ import java.security.SecureRandom;
 import java.util.*;
 
 public class OAuthService {
-    private HashMap<String, String> clientInfo;
+    protected HashMap<String, String> clientInfo;
     private HashMap<String, String> tokenMap = new HashMap<String, String>();
     private HashMap<String, String> verifierMap = new HashMap<String, String>();
     private String platform = "";

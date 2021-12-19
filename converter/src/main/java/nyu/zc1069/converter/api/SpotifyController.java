@@ -2,19 +2,21 @@ package nyu.zc1069.converter.api;
 
 import com.mashape.unirest.http.HttpResponse;
 import nyu.zc1069.converter.service.SpotifyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
 //@CrossOrigin(origins = "http://127.0.0.1:8081")
-@CrossOrigin(origins = "http://localhost:8081")
+//@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("api/v1/spotify")
 @RestController
 public class SpotifyController {
-    private final SpotifyService spotifyService;
+    private SpotifyService spotifyService;
 
-    public SpotifyController() {
-        this.spotifyService = new SpotifyService();
+    @Autowired
+    public void setService(SpotifyService spotifyService) {
+        this.spotifyService = spotifyService;
     }
 
     @PostMapping

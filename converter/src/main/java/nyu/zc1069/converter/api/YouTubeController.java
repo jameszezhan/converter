@@ -5,18 +5,21 @@ import com.mashape.unirest.http.JsonNode;
 import nyu.zc1069.converter.service.OAuthService;
 import nyu.zc1069.converter.service.YouTubeService;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 //@CrossOrigin(origins = "http://localhost:8081")
 //@CrossOrigin(origins = "http://127.0.0.1:8081")
 @RequestMapping("api/v1/youtube")
 @RestController
 public class YouTubeController {
-    private final YouTubeService youTubeService;
+    private YouTubeService youTubeService;
 
-    public YouTubeController() {
-        this.youTubeService = new YouTubeService("GOOGLE");
+    @Autowired
+    public void setService(YouTubeService youTubeService) {
+        this.youTubeService = youTubeService;
     }
 
     @PostMapping

@@ -19,7 +19,6 @@ import java.util.HashMap;
 
 @Component
 public class SpotifyService extends OAuthService{
-    private HashMap<String, String> clientInfo = null;
     private HashMap<String, String> tokenMap = null;
     private HashMap<String, String> userIdMap = new HashMap<String, String>();
 
