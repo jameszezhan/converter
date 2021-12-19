@@ -3,29 +3,43 @@ package nyu.zc1069.converter.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import nyu.zc1069.converter.model.Basetrack;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@Component
 public class SpotifyService extends OAuthService{
     private HashMap<String, String> clientInfo = null;
     private HashMap<String, String> tokenMap = null;
     private HashMap<String, String> userIdMap = new HashMap<String, String>();
 
-    public SpotifyService(String platform) {
-        super(platform);
-        clientInfo = getClientInfo();
+    public SpotifyService() {
+        super("spotify");
         tokenMap = getTokenMap();
+    }
+
+    @PostConstruct
+    public HashMap<String, String> getClientInfo() {
+        if (this.clientInfo == null){
+            this.clientInfo = new HashMap<>();
+            this.clientInfo.put("CLIENT_ID", env.getSPOTIFY_CLIENT_ID());
+            this.clientInfo.put("CLIENT_SECRET", env.getSPOTIFY_CLIENT_SECRET());
+            this.clientInfo.put("SCOPE", env.getSPOTIFY_SCOPE());
+            this.clientInfo.put("AUTH_URL", env.getSPOTIFY_AUTH_URL());
+            this.clientInfo.put("TOKEN_URL", env.getSPOTIFY_TOKEN_URL());
+            this.clientInfo.put("REDIRECT_URL", env.getSPOTIFY_REDIRECT_URL());
+        }
+        return this.clientInfo;
     }
 
     public String searchTracks(ArrayList<String> trackTitles){

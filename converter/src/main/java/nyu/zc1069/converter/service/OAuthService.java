@@ -5,8 +5,9 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import nyu.zc1069.converter.model.Basetrack;
 import org.json.JSONObject;
-import org.springframework.context.NoSuchMessageException;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
@@ -18,31 +19,18 @@ public class OAuthService {
     private HashMap<String, String> clientInfo;
     private HashMap<String, String> tokenMap = new HashMap<String, String>();
     private HashMap<String, String> verifierMap = new HashMap<String, String>();
+    private String platform = "";
+    protected GlobalProperties env;
 
-    public OAuthService(String platform)  {
-        // read properties from config file
-        Properties properties = new Properties();
-        FileInputStream in = null;
-        try {
-            in = new FileInputStream("Application.properties");
-            properties.load(in);
-            in.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @Autowired
+    public void setGlobal(GlobalProperties global) {
+        System.out.println("Loading autowired");
+        this.env = global;
+    }
 
-        clientInfo = new HashMap<>(){{
-            put("CLIENT_ID", properties.getProperty(platform + "_CLIENT_ID"));
-            put("CLIENT_SECRET", properties.getProperty(platform + "_CLIENT_SECRET"));
-            put("SCOPE", properties.getProperty(platform + "_SCOPE"));
-            put("AUTH_URL", properties.getProperty(platform + "_AUTH_URL"));
-            put("TOKEN_URL", properties.getProperty(platform + "_TOKEN_URL"));
-            put("REDIRECT_URL", properties.getProperty(platform + "_REDIRECT_URL"));
-
-        }};
-
+    public OAuthService(String platform) {
+        System.out.println("Loading OAuthService");
+        this.platform = platform;
     }
 
     /** platformPrefix can be GOOGLE or SPOTIFY*/
@@ -117,10 +105,6 @@ public class OAuthService {
             System.exit(1);
         }
         return response;
-    }
-
-    public HashMap<String, String> getClientInfo() {
-        return this.clientInfo;
     }
 
     public HashMap<String, String> getTokenMap() {

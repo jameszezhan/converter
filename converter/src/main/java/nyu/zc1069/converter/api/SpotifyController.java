@@ -1,9 +1,7 @@
 package nyu.zc1069.converter.api;
 
 import com.mashape.unirest.http.HttpResponse;
-import nyu.zc1069.converter.service.OAuthService;
 import nyu.zc1069.converter.service.SpotifyService;
-import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ public class SpotifyController {
     private final SpotifyService spotifyService;
 
     public SpotifyController() {
-        this.spotifyService = new SpotifyService("SPOTIFY");
+        this.spotifyService = new SpotifyService();
     }
 
     @PostMapping
