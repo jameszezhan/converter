@@ -1,1 +1,1 @@
-web: java -Dserver.port=8089 -jar converter/target/backend-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -jar converter/target/backend-0.0.1-SNAPSHOT.jar
