@@ -11,6 +11,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/v1/**")
-                .allowedOrigins("http://127.0.0.1:8081", "http://localhost:8081", "http://zeehon.us","https://zeehon.us");
+                .allowedOrigins(
+                    "http://127.0.0.1:8081", 
+                    "http://localhost:8081", 
+                    "http://zeehon.us",
+                    "https://zeehon.us",
+                    "https://glacial-castle-98362.herokuapp.com");
     }
 }
