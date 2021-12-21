@@ -15,4 +15,4 @@ SPOTIFY_AUTH_URL: https://accounts.spotify.com/authorize
 SPOTIFY_TOKEN_URL: https://accounts.spotify.com/api/token
 SPOTIFY_REDIRECT_URL: http://localhost:8080/api/v1/spotify
 server:
-  port: $PORT
+  port: 8089
