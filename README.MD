@@ -1,4 +1,4 @@
-
+Local dev spring config: converter/src/main/resources/application-dev.yml
 
 ## This is a fullstack project for migrating music in YouTube playlist to Spotify.
 
