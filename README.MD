@@ -8,8 +8,14 @@ Local dev spring config: converter/src/main/resources/application-dev.yml
 * [Spring Boot](https://spring.io/guides/gs/spring-boot/) for server API
 * [Docker Stack](https://docs.docker.com/engine/reference/commandline/stack/) for deployment
 
+# How to run
+* git clone project
+* copy application.yml to application-dev.yml
+* Update Google and Spotify api keys and secrets
+* `mvn clean install`
+* `mvn --projects converter spring-boot:run`
 
-# How to run this project
+# How to run this project (Deprecated)
 Prerequsite for running this project:
 * Docker Swarm 
   
@@ -65,3 +71,6 @@ If you want to play with application without running it, you can visit https://z
 ## Deploy stack
 `cd ../docker`
 `docker stack deploy -c converter-service.yml converter`
+
+
+https://github.com/jonashackt/spring-boot-vuejs
