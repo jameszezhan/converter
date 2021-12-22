@@ -2,14 +2,14 @@ spring:
   config:
     activate:
       on-profile: prod
-GOOGLE_CLIENT_ID: 451058099687-c5jppqbq1jfgcfmct79tf7a289fdniih.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET: 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
+GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
 GOOGLE_SCOPE: https://www.googleapis.com/auth/youtube.readonly
 GOOGLE_AUTH_URL: https://accounts.google.com/o/oauth2/v2/auth
 GOOGLE_TOKEN_URL: https://oauth2.googleapis.com/token
 GOOGLE_REDIRECT_URL: ${GOOGLE_REDIRECT_URL}
-SPOTIFY_CLIENT_ID: 4e553333356e4435a1fcfc3a2ef30562
-SPOTIFY_CLIENT_SECRET: f2409417d2004da592a65955af84541b
+SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
 SPOTIFY_SCOPE: user-read-email playlist-modify-private
 SPOTIFY_AUTH_URL: https://accounts.spotify.com/authorize
 SPOTIFY_TOKEN_URL: https://accounts.spotify.com/api/token
