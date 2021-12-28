@@ -1,6 +1,4 @@
-Local dev spring config: converter/src/main/resources/application-dev.yml
-
-## This is a fullstack project for migrating music in YouTube playlist to Spotify.
+## This is a fullstack project for migrating music in YouTube Music to Spotify.
 
 # Tech stack:
 <!-- * [NGINX](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/) as a proxy server -->
@@ -8,7 +6,20 @@ Local dev spring config: converter/src/main/resources/application-dev.yml
 * [Spring Boot](https://spring.io/guides/gs/spring-boot/) for server API
 * [Docker Stack](https://docs.docker.com/engine/reference/commandline/stack/) for deployment
 
-# How to run
+# How to run locally
+On production mode, all web content (vue js) will be served from spring.
+But locally, we can run backend and frontend as two saperate services on port 8080(FE) and port 8089(BE).
+## Backend
+* git clone project
+* Edit `converter/src/main/resources/application.properties` and update active profile to `dev`
+* Run application.
+
+## Frontend
+* `cd converter-gui`
+* `npm run serve`
+* env vars will be served from `.env.development`, instead of `.env.production`.
+
+# How to build
 * git clone project
 * copy application.yml to application-dev.yml
 * Update Google and Spotify api keys and secrets
